@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Tabla de hechos a nivel de orden individual. Consolida ventas, descuentos e indicadores de éxito."
+    columns:
+      - name: order_id
+        description: "Clave primaria de la orden."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Clave foránea que referencia a la dimensión de clientes."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+      - name: net_amount
+        description: "Monto neto facturado tras descontar cupones y promociones."
+        tests:
+          - not_null
+
+  - name: dim_customers
+    description: "Dimensión de clientes enriquecida con métricas de comportamiento, valor de vida (LTV) y segmentación."
+    columns:
+      - name: customer_id
+        description: "Clave primaria única del cliente."
+        tests:
+          - unique
+          - not_null
+      - name: customer_segment
+        description: "Segmento de cliente basado en valor y recurrencia (VIP, Frequent, Active, Prospect)."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['VIP', 'Frequent', 'Active', 'Prospect']
+
+  - name: dim_products
+    description: "Dimensión de productos con métricas agregadas de ventas, ingresos netos y rentabilidad estimada."
+    columns:
+      - name: product_id
+        description: "Clave primaria única del producto."
+        tests:
+          - unique
+          - not_null
+      - name: category
+        description: "Categoría de producto."
+        tests:
+          - not_null

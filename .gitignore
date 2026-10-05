@@ -1,0 +1,28 @@
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.pyc
+
+# dbt Artifacts & Execution Logs
+target/
+dbt_packages/
+logs/
+
+# Sensitive Credentials & Keys (Crucial for Cloud Security)
+*.json
+profiles.yml
+.env
+*.key
+*.pem
+
+# Personal Notes / Scratch Docs
+*.docx
+
+# System & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

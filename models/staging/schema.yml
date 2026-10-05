@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Capa staging de clientes. Estandariza nombres, correos y tipos de datos."
+    columns:
+      - name: customer_id
+        description: "Clave primaria única del cliente."
+        tests:
+          - unique
+          - not_null
+      - name: email
+        description: "Correo electrónico en minúsculas y sin espacios."
+        tests:
+          - not_null
+
+  - name: stg_products
+    description: "Capa staging de catálogo de productos con cálculo de margen unitario."
+    columns:
+      - name: product_id
+        description: "Clave primaria única del producto."
+        tests:
+          - unique
+          - not_null
+      - name: category
+        description: "Categoría del producto."
+        tests:
+          - not_null
+
+  - name: stg_orders
+    description: "Capa staging de órdenes de compra."
+    columns:
+      - name: order_id
+        description: "Identificador único de la orden."
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Identificador del cliente que realizó la compra."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+      - name: status
+        description: "Estado operativo de la orden."
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['completed', 'returned', 'cancelled', 'processing', 'shipped']
+
+  - name: stg_order_items
+    description: "Capa staging del detalle de productos por orden."
+    columns:
+      - name: order_item_id
+        description: "Identificador único de la línea de pedido."
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        description: "Referencia a la orden correspondiente."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+      - name: product_id
+        description: "Referencia al producto comprado."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_products')
+                field: product_id

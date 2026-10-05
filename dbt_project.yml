@@ -1,0 +1,34 @@
+name: 'retail_analytics'
+version: '1.0.0'
+config-version: 2
+
+profile: 'retail_analytics'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+seeds:
+  retail_analytics:
+    raw_products:
+      +column_types:
+        cost_price: numeric
+        list_price: numeric
+    raw_order_items:
+      +column_types:
+        unit_price: numeric
+        discount_amount: numeric
+
+models:
+  retail_analytics:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
