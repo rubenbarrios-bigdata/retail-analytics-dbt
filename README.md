@@ -3,7 +3,7 @@
 [![dbt-core](https://img.shields.io/badge/dbt--core-v1.12.5-orange?logo=dbt)](https://www.getdbt.com/)
 [![Google BigQuery](https://img.shields.io/badge/Google_Cloud-BigQuery-blue?logo=googlecloud)](https://cloud.google.com/bigquery)
 [![Tests Passing](https://img.shields.io/badge/Calidad_de_Datos-28%2F28%20tests%20pasados-brightgreen)](https://docs.getdbt.com/docs/build/data-tests)
-[![SQL](https://img.shields.io/badge/SQL-Intermedio-informational)](https://cloud.google.com/bigquery/docs/reference/standard-sql/en-US)
+[![SQL](https://img.shields.io/badge/Language-SQL-informational)](https://cloud.google.com/bigquery/docs/reference/standard-sql/en-US)
 [![Rol](https://img.shields.io/badge/Perfil-Analista%20de%20Datos%20%7C%20BI-green)](#contexto-del-proyecto-y-rol-del-analista)
 
 ---
@@ -13,7 +13,7 @@
 En las empresas de comercio minorista (*Retail & E-commerce*), los datos de ventas, clientes y productos suelen llegar a la base de datos (BigQuery) con formatos desordenados, valores nulos, fechas en formatos de texto y sin las métricas clave que la gerencia necesita ver en sus reportes diarios.
 
 Como **Analista de Datos**, en lugar de intentar limpiar millones de filas en hojas de cálculo o sobrecargar Power Query con transformaciones lentas, utilicé **dbt Core** para:
-1. **Limpiar y estandarizar los datos crudos** directamente dentro de BigQuery usando SQL intermedio.
+1. **Limpiar y estandarizar los datos crudos** directamente dentro de BigQuery usando SQL.
 2. **Construir tablas analíticas consolidadas** con las métricas comerciales ya calculadas (Ventas netas, márgenes de ganancia, ticket promedio y segmentación de clientes).
 3. **Validar la calidad de los datos** con pruebas automáticas para asegurar que ningún gráfico en Power BI muestre datos erróneos o incompletos.
 
