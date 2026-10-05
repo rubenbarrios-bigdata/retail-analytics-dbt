@@ -32,13 +32,14 @@ Este modelo de datos fue diseñado para que el equipo comercial y de marketing p
 
 ## 📂 Origen y Fuente de los Datos (Data Source)
 
-Los datos crudos de este proyecto consisten en un **dataset sintético de comercio minorista (*Retail & E-commerce*)** estructurado para emular la actividad transaccional de un negocio omnicanal (*Web*, *App móvil*, *Tienda física*).
+Los datos crudos de este proyecto provienen de un **generador transaccional en Python** ([`scripts/generate_datasets.py`](scripts/generate_datasets.py)) diseñado específicamente para este proyecto. Simula la base de datos operacional (OLTP) de una empresa de comercio minorista (*Retail & E-commerce*) multicanal (*Web*, *App móvil*, *Tienda física*) siguiendo la arquitectura relacional estándar de la industria (esquema Cabecera-Detalle, Clientes y Catálogo de Productos).
 
+* **Origen y Generación:** Generado programáticamente mediante scripts de modelado transaccional en Python para garantizar un entorno de análisis realista, controlado y 100% reproducible sin depender de fuentes externas inestables.
 * **Ubicación en el repositorio:**
-  * [`data/`](data/): Contiene el dataset crudo original consolidado ([`raw_retail_transactions.csv`](data/raw_retail_transactions.csv)) y las tablas de origen en CSV.
-  * [`seeds/`](seeds/): Archivos CSV estructurados para la ingesta y versionado directo en dbt.
+  * [`data/`](data/): Contiene el dataset crudo original consolidado ([`raw_retail_transactions.csv`](data/raw_retail_transactions.csv)) y las 4 tablas transaccionales en CSV.
+  * [`seeds/`](seeds/): Las 4 tablas CSV listas para su ingesta directa y control de versiones en dbt.
 * **Carga en el Data Warehouse:** Se cargan directamente en Google BigQuery mediante el comando `dbt seed`.
-* **Seguridad y Privacidad:** No expone información real de clientes (datos sintéticos sin PII con correos `@example.com`).
+* **Seguridad y Privacidad:** Datos sintéticos sin información personal identificable (PII), utilizando dominios de prueba `@example.com`.
 * **Estructura de las tablas crudas:**
   * `raw_customers` (200 filas): Maestro de clientes, ubicación geográfica y fecha de registro.
   * `raw_products` (36 filas): Catálogo comercial con costos y precios de venta sugeridos.
@@ -181,3 +182,12 @@ Al abrir Power BI:
    dbt docs generate
    dbt docs serve
    ```
+
+---
+
+## 👨‍💻 Autor
+
+**Rubén Barrios**
+
+Proyecto realizado como práctica de modelado de datos con dbt y BigQuery, orientado a seguir consolidando el desarrollo profesional en el área de Data Analytics.
+
