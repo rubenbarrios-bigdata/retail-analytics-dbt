@@ -1,4 +1,4 @@
-# Retail Analytics: Preparación y Modelado de Datos para Power BI con dbt y Google BigQuery
+# Retail Analytics: Preparación y Modelado de Datos para Power BI/Data Studio con dbt y Google BigQuery
 
 [![dbt-core](https://img.shields.io/badge/dbt--core-v1.12.5-orange?logo=dbt)](https://www.getdbt.com/)
 [![Google BigQuery](https://img.shields.io/badge/Google_Cloud-BigQuery-blue?logo=googlecloud)](https://cloud.google.com/bigquery)
@@ -136,13 +136,13 @@ De esta forma, cualquier reporte comercial utiliza exactamente la misma definici
 
 ---
 
-## 📈 Conexión con Power BI
+## 📈 Conexión con Herramientas de BI (Power BI / Data Studio)
 
-Al abrir Power BI:
+Al conectar con **Power BI** o **Data Studio (Looker Studio)**:
 1. Conectar mediante el conector nativo de **Google BigQuery**.
 2. Seleccionar el dataset `dbt_dev` y marcar las 3 tablas preparadas: `dim_customers`, `dim_products` y `fct_orders`.
 3. Relacionar mediante `customer_id` y `product_id`.
-4. Como las métricas clave ya están precalculadas en dbt, el modelo en Power BI queda liviano, rápido y sin fórmulas DAX excesivas.
+4. Como las métricas clave ya están precalculadas en dbt, los modelos y dashboards quedan livianos, rápidos y sin necesidad de fórmulas DAX excesivas.
 
 ---
 
