@@ -1,24 +1,24 @@
-# Retail & E-Commerce Analytics Engineering con dbt Core y Google BigQuery
+# Retail Analytics: Modelado y Transformación de Datos con dbt Core y Google BigQuery
 
 [![dbt-core](https://img.shields.io/badge/dbt--core-v1.12.5-orange?logo=dbt)](https://www.getdbt.com/)
 [![Google BigQuery](https://img.shields.io/badge/Google_Cloud-BigQuery-blue?logo=googlecloud)](https://cloud.google.com/bigquery)
 [![Tests Passing](https://img.shields.io/badge/tests-28%2F28%20passing-brightgreen)](https://docs.getdbt.com/docs/build/data-tests)
-[![SQL](https://img.shields.io/badge/SQL-Advanced%20Modeling-informational)](https://cloud.google.com/bigquery/docs/reference/standard-sql/en-US)
-[![Methodology](https://img.shields.io/badge/Methodology-Kimball%20Dimensional%20Modeling-purple)](#arquitectura-y-modelo-dimensional)
+[![SQL](https://img.shields.io/badge/SQL-Intermedio-informational)](https://cloud.google.com/bigquery/docs/reference/standard-sql/en-US)
+[![Focus](https://img.shields.io/badge/Rol-Data%20Analyst%20%7C%20BI-green)](#resumen-ejecutivo-del-proyecto)
 
 ---
 
 ## 📌 Resumen Ejecutivo del Proyecto
 
-Este repositorio contiene un proyecto integral de **Analytics Engineering** implementado con **dbt Core** y **Google Cloud BigQuery**. El objetivo es transformar datos transaccionales crudos de ventas y clientes de una empresa de comercio minorista (*Retail & E-commerce*) en un modelo dimensional listo para la toma de decisiones empresariales y visualización en herramientas de Business Intelligence como **Power BI** o **Looker**.
+Este repositorio contiene un proyecto práctico de **Análisis y Modelado de Datos** enfocado en el rol de **Data Analyst**, utilizando **dbt Core** y **Google Cloud BigQuery**. 
 
-El proyecto abarca el ciclo de vida completo de un pipeline ELT moderno:
-* **Ingesta y reproducibilidad** mediante `dbt seed` (1,000 órdenes, 1,794 transacciones, 200 clientes y 35 productos).
-* **Capa Staging** para limpieza, casteo de tipos y estandarización técnica (`views`).
-* **Capa Marts** con modelado dimensional estrella (*Star Schema* con `tables`).
-* **Modularidad avanzada** con macros en **Jinja** (`calculate_margin_pct`) para cálculos financieros seguros.
-* **Control de calidad** con **28 pruebas automáticas** (`unique`, `not_null`, integridad referencial `relationships` y reglas de negocio `accepted_values`).
-* **Catálogo y linaje de datos vivo** generado automáticamente con `dbt docs`.
+El objetivo es resolver una necesidad cotidiana en analítica: tomar datos crudos de ventas y clientes de una tienda minorista (*Retail & E-commerce*), limpiarlos y organizarlos mediante SQL estructurado en dbt para que queden listos, confiables y optimizados para tableros en **Power BI** o **Looker**.
+
+El proyecto demuestra las habilidades clave que las empresas buscan hoy en un Analista de Datos moderno:
+* **Transformación y limpieza de datos:** Estandarización de formatos, tipos y fechas en la capa Staging.
+* **Modelado para BI:** Creación de tablas analíticas consolidadas de clientes y ventas con métricas clave de negocio (LTV, ticket promedio AOV, márgenes y segmentación).
+* **Calidad de datos:** Validación automática de 28 pruebas (`dbt test`) para asegurar que no existan duplicados ni valores nulos antes del reporte.
+* **Documentación y linaje:** Generación automática del diccionario de datos y mapa de dependencias con `dbt docs`.
 
 ---
 
