@@ -135,8 +135,8 @@ Cualquier persona puede clonar este repositorio y ejecutar el pipeline completo 
 
 ### 1. Clonar el repositorio y crear entorno virtual
 ```bash
-git clone <url-de-tu-repositorio>
-cd dbt
+git clone https://github.com/rubenbarrios-bigdata/retail-analytics-dbt.git
+cd retail-analytics-dbt
 python -m venv .venv
 # En Windows:
 .venv\Scripts\activate
