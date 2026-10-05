@@ -1,3 +1,4 @@
+-- Modelo de Órdenes de Venta: Consolida totales, descuentos y estado para análisis comercial y Power BI
 with orders as (
     select * from {{ ref('stg_orders') }}
 ),

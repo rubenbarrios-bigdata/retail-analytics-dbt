@@ -2,15 +2,15 @@ version: 2
 
 models:
   - name: fct_orders
-    description: "Tabla de hechos a nivel de orden individual. Consolida ventas, descuentos e indicadores de éxito."
+    description: "Tabla consolidada de órdenes de venta lista para análisis comercial y tableros en Power BI."
     columns:
       - name: order_id
-        description: "Clave primaria de la orden."
+        description: "Número de orden único."
         tests:
           - unique
           - not_null
       - name: customer_id
-        description: "Clave foránea que referencia a la dimensión de clientes."
+        description: "Identificador del cliente que compró."
         tests:
           - not_null
           - relationships:
@@ -18,34 +18,34 @@ models:
                 to: ref('dim_customers')
                 field: customer_id
       - name: net_amount
-        description: "Monto neto facturado tras descontar cupones y promociones."
+        description: "Monto neto cobrado al cliente (precio venta menos descuentos)."
         tests:
           - not_null
 
   - name: dim_customers
-    description: "Dimensión de clientes enriquecida con métricas de comportamiento, valor de vida (LTV) y segmentación."
+    description: "Vista 360 de clientes: consolida historial de compras, valor acumulado y clasificación de clientes para marketing."
     columns:
       - name: customer_id
-        description: "Clave primaria única del cliente."
+        description: "Identificador único de cliente."
         tests:
           - unique
           - not_null
       - name: customer_segment
-        description: "Segmento de cliente basado en valor y recurrencia (VIP, Frequent, Active, Prospect)."
+        description: "Clasificación comercial del cliente según su gasto y recurrencia (VIP, Frequent, Active, Prospect)."
         tests:
           - accepted_values:
               arguments:
                 values: ['VIP', 'Frequent', 'Active', 'Prospect']
 
   - name: dim_products
-    description: "Dimensión de productos con métricas agregadas de ventas, ingresos netos y rentabilidad estimada."
+    description: "Catálogo de productos enriquecido con ventas acumuladas, ingresos generados y margen de ganancia."
     columns:
       - name: product_id
-        description: "Clave primaria única del producto."
+        description: "Código único de producto."
         tests:
           - unique
           - not_null
       - name: category
-        description: "Categoría de producto."
+        description: "Categoría comercial a la que pertenece el producto."
         tests:
           - not_null

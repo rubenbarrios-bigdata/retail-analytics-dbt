@@ -1,3 +1,4 @@
+-- Catálogo Analítico de Productos: Consolida ventas acumuladas, ingresos y margen de ganancia comercial
 with products as (
     select * from {{ ref('stg_products') }}
 ),

@@ -1,3 +1,4 @@
+-- Dimensión 360 de Clientes: Agrupa historial de compra, gasto total (LTV) y segmentación de clientes
 with customers as (
     select * from {{ ref('stg_customers') }}
 ),

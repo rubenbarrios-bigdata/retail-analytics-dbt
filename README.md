@@ -1,185 +1,166 @@
-# Retail Analytics: Modelado y Transformación de Datos con dbt Core y Google BigQuery
+# Retail Analytics: Preparación y Modelado de Datos para Power BI con dbt y Google BigQuery
 
 [![dbt-core](https://img.shields.io/badge/dbt--core-v1.12.5-orange?logo=dbt)](https://www.getdbt.com/)
 [![Google BigQuery](https://img.shields.io/badge/Google_Cloud-BigQuery-blue?logo=googlecloud)](https://cloud.google.com/bigquery)
-[![Tests Passing](https://img.shields.io/badge/tests-28%2F28%20passing-brightgreen)](https://docs.getdbt.com/docs/build/data-tests)
+[![Tests Passing](https://img.shields.io/badge/Calidad_de_Datos-28%2F28%20tests%20pasados-brightgreen)](https://docs.getdbt.com/docs/build/data-tests)
 [![SQL](https://img.shields.io/badge/SQL-Intermedio-informational)](https://cloud.google.com/bigquery/docs/reference/standard-sql/en-US)
-[![Focus](https://img.shields.io/badge/Rol-Data%20Analyst%20%7C%20BI-green)](#resumen-ejecutivo-del-proyecto)
+[![Rol](https://img.shields.io/badge/Perfil-Analista%20de%20Datos%20%7C%20BI-green)](#contexto-del-proyecto-y-rol-del-analista)
 
 ---
 
-## 📌 Resumen Ejecutivo del Proyecto
+## 📌 Contexto del Proyecto y Rol del Analista
 
-Este repositorio contiene un proyecto práctico de **Análisis y Modelado de Datos** enfocado en el rol de **Data Analyst**, utilizando **dbt Core** y **Google Cloud BigQuery**. 
+En las empresas de comercio minorista (*Retail & E-commerce*), los datos de ventas, clientes y productos suelen llegar a la base de datos (BigQuery) con formatos desordenados, valores nulos, fechas en formatos de texto y sin las métricas clave que la gerencia necesita ver en sus reportes diarios.
 
-El objetivo es resolver una necesidad cotidiana en analítica: tomar datos crudos de ventas y clientes de una tienda minorista (*Retail & E-commerce*), limpiarlos y organizarlos mediante SQL estructurado en dbt para que queden listos, confiables y optimizados para tableros en **Power BI** o **Looker**.
-
-El proyecto demuestra las habilidades clave que las empresas buscan hoy en un Analista de Datos moderno:
-* **Transformación y limpieza de datos:** Estandarización de formatos, tipos y fechas en la capa Staging.
-* **Modelado para BI:** Creación de tablas analíticas consolidadas de clientes y ventas con métricas clave de negocio (LTV, ticket promedio AOV, márgenes y segmentación).
-* **Calidad de datos:** Validación automática de 28 pruebas (`dbt test`) para asegurar que no existan duplicados ni valores nulos antes del reporte.
-* **Documentación y linaje:** Generación automática del diccionario de datos y mapa de dependencias con `dbt docs`.
+Como **Analista de Datos**, en lugar de intentar limpiar millones de filas en hojas de cálculo o sobrecargar Power Query con transformaciones lentas, utilicé **dbt Core** para:
+1. **Limpiar y estandarizar los datos crudos** directamente dentro de BigQuery usando SQL intermedio.
+2. **Construir tablas analíticas consolidadas** con las métricas comerciales ya calculadas (Ventas netas, márgenes de ganancia, ticket promedio y segmentación de clientes).
+3. **Validar la calidad de los datos** con pruebas automáticas para asegurar que ningún gráfico en Power BI muestre datos erróneos o incompletos.
 
 ---
 
-## 🏗 Arquitectura y Flujo de Datos (DAG)
+## 🎯 Preguntas de Negocio que responde este Proyecto
 
-El linaje de datos sigue la estructura estándar de capas analíticas:
+Este modelo de datos fue diseñado para que el equipo comercial y de marketing pueda responder rápidamente en Power BI preguntas como:
+
+* **Rendimiento de Ventas:** ¿Cuánto vendemos en bruto vs. cuánto descontamos en promociones? ¿Cuál es la facturación neta mensual?
+* **Comportamiento de Clientes:** ¿Quiénes son nuestros clientes más valiosos (*VIP*)? ¿Qué porcentaje de clientes registrados aún no realiza su primera compra (*Prospects*)?
+* **Rentabilidad de Productos:** ¿Cuáles artículos tienen el mejor margen de ganancia y cuáles representan el mayor volumen de unidades vendidas?
+* **Efectividad de Canales:** ¿Por qué canal se concentran las mayores ventas: sitio web, aplicación móvil o tiendas físicas?
+
+---
+
+## 🔄 Flujo de Trabajo del Analista
+
+El flujo sigue las mejores prácticas de la analítica moderna:
 
 ```mermaid
-graph TD
-    subgraph Raw Data / Seeds
-        RC[(raw_customers)]
-        RP[(raw_products)]
-        RO[(raw_orders)]
-        ROI[(raw_order_items)]
+graph LR
+    subgraph 1. Datos Crudos (BigQuery)
+        A[(Clientes)]
+        B[(Productos)]
+        C[(Órdenes)]
+        D[(Detalle Órdenes)]
     end
 
-    subgraph Staging Layer (Vistas)
-        SC[stg_customers]
-        SP[stg_products]
-        SO[stg_orders]
-        SOI[stg_order_items]
+    subgraph 2. Mi Trabajo en dbt (SQL)
+        E[Limpieza y Estandarización<br/>Capa Staging]
+        F[Tablas de Negocio Consolidadas<br/>Capa Analítica]
+        G{Pruebas de Calidad<br/>28 Tests}
     end
 
-    subgraph Marts Layer (Tablas Dimensionales)
-        FO[(fct_orders)]
-        DC[(dim_customers)]
-        DP[(dim_products)]
+    subgraph 3. Visualización y Toma de Decisiones
+        H[Power BI / Reportes Gerenciales]
     end
 
-    subgraph BI & Reporting
-        PBI[Power BI / Looker Dashboards]
-        ADHOC[Analyses: Monthly Performance]
-    end
+    A --> E
+    B --> E
+    C --> E
+    D --> E
 
-    RC --> SC
-    RP --> SP
-    RO --> SO
-    ROI --> SOI
-
-    SO --> FO
-    SOI --> FO
-
-    SC --> DC
-    FO --> DC
-
-    SP --> DP
-    SOI --> DP
-    SO --> DP
-
-    FO --> PBI
-    DC --> PBI
-    DP --> PBI
-    FO --> ADHOC
+    E --> F
+    F --> G
+    G --> H
 ```
 
 ---
 
-## 📊 Modelo Dimensional de Negocio (Kimball)
+## 📊 Tablas Analíticas Creadas para los Reportes
 
-### 1. `fct_orders` (Tabla de Hechos)
-* **Grano:** Una fila por cada orden individual de compra.
-* **Métricas:** Unidades totales vendidas, monto bruto (`gross_amount`), descuentos acumulados (`total_discount_amount`), facturación neta (`net_amount`) y bandera booleana `is_completed_order`.
-* **Dimensiones asociadas:** `customer_id`, canal de venta (`channel`), fecha, año y mes.
+El proyecto organiza los datos en tablas limpias y listas para conectar directamente con Power BI:
 
-### 2. `dim_customers` (Dimensión Clientes 360)
-* **Grano:** Una fila por cliente registrado.
+### 1. `fct_orders` (Resumen de Órdenes de Venta)
+* **Objetivo:** Permite analizar las ventas a nivel de cada pedido.
+* **Métricas calculadas:** Unidades totales por orden, monto de lista (`gross_amount`), descuentos otorgados (`total_discount_amount`), venta neta final (`net_amount`) y estado del pedido (`completed`, `returned`, `cancelled`).
+
+### 2. `dim_customers` (Vista 360 del Cliente)
+* **Objetivo:** Permite a marketing segmentar clientes y entender su fidelidad.
 * **Métricas calculadas:**
-  * Fecha de primera y última compra.
-  * Total de órdenes históricas y órdenes completadas.
-  * **Customer Lifetime Value (LTV)**: Facturación acumulada histórica.
-  * **Ticket Promedio (AOV)**: Gasto promedio por pedido completado.
-* **Segmentación analítica automática:**
-  * `VIP`: Facturación acumulada superior o igual a $600.
-  * `Frequent`: 3 o más compras completadas.
-  * `Active`: Entre 1 y 2 compras completadas.
-  * `Prospect`: Clientes registrados sin compras efectivas aún.
+  * Fecha de primer y último pedido.
+  * Total de órdenes realizadas y órdenes exitosas.
+  * **Customer Lifetime Value (LTV):** Gasto total acumulado por el cliente.
+  * **Ticket Promedio (AOV):** Monto promedio por compra completada.
+  * **Segmento del Cliente:**
+    * 🌟 **VIP:** Clientes con gasto acumulado $\ge \$600$.
+    * 🔁 **Frequent:** Clientes con 3 o más compras.
+    * 👤 **Active:** Clientes con 1 o 2 compras.
+    * 🎯 **Prospect:** Usuarios registrados sin compras efectivas.
 
-### 3. `dim_products` (Dimensión Catálogo y Rendimiento)
-* **Grano:** Una fila por producto.
-* **Atributos:** Categoría, costo unitario, precio de lista, margen unitario y margen porcentual.
-* **Métricas de rendimiento:** Total de órdenes en que participó, unidades vendidas, ingresos netos generados y **ganancia total estimada**.
-
----
-
-## 🛡 Calidad de Datos y Gobernanza (28 Tests)
-
-La integridad del modelo se valida automáticamente contra BigQuery ejecutando `dbt test`:
-
-| Tipo de Prueba | Columnas Auditadas | Propósito de Negocio |
-| :--- | :--- | :--- |
-| **`unique`** | `customer_id`, `product_id`, `order_id`, `order_item_id` | Garantiza ausencia total de duplicados en claves primarias. |
-| **`not_null`** | Claves primarias, correos, montos netos y categorías | Evita registros huérfanos o fallos en visualizaciones BI. |
-| **`relationships`** | `order_id` -> `orders`<br>`product_id` -> `products`<br>`customer_id` -> `customers` | Asegura **integridad referencial estricta** entre hechos y dimensiones. |
-| **`accepted_values`** | `orders.status` in `['completed', 'returned', 'cancelled', 'processing', 'shipped']`<br>`dim_customers.customer_segment` in `['VIP', 'Frequent', 'Active', 'Prospect']` | Valida que los estados y clasificaciones sigan los catálogos de negocio. |
+### 3. `dim_products` (Catálogo y Rentabilidad Comercial)
+* **Objetivo:** Ayuda a compras y finanzas a medir qué productos son rentables.
+* **Métricas calculadas:** Unidades totales vendidas, ingresos brutos, ingresos netos reales, porcentaje de margen comercial y **ganancia total estimada**.
 
 ---
 
-## ⚙️ Macros y Reusabilidad con Jinja
+## 🛡️ Control de Calidad: ¿Por qué usamos `dbt test`?
 
-Para evitar lógica duplicada en cálculos de márgenes, se desarrolló la macro [`macros/calculate_margin_pct.sql`](file:///c:/Users/ismar/Downloads/dbt/macros/calculate_margin_pct.sql):
+Uno de los errores más comunes de un analista novato es conectar Power BI directamente a datos crudos y que el reporte falle en plena presentación ejecutiva por culpa de datos rotos.
+
+Para evitar eso, definí **28 pruebas automáticas** que se ejecutan en BigQuery antes de que los datos toquen Power BI:
+
+* **Sin duplicados (`unique`):** Verificamos que ningún cliente ni orden esté duplicado.
+* **Sin campos vacíos (`not_null`):** Garantizamos que las ventas, fechas y claves primarias nunca vengan vacías.
+* **Integridad entre tablas (`relationships`):** Aseguramos que cada producto y cliente en una orden exista realmente en el catálogo maestro.
+* **Valores de negocio válidos (`accepted_values`):** Comprobamos que los estados de pedidos solo correspondan a los permitidos por el negocio (`completed`, `shipped`, `returned`, `cancelled`, `processing`).
+
+---
+
+## 💡 Cálculo Consistente de Márgenes (Macro en Jinja)
+
+Para que ningún analista del equipo calcule el margen de ganancia de forma distinta o cometa errores al dividir por cero, creamos una fórmula estandarizada y reutilizable en [`macros/calculate_margin_pct.sql`](file:///c:/Users/ismar/Downloads/dbt/macros/calculate_margin_pct.sql):
 
 ```sql
 {% macro calculate_margin_pct(list_price, cost_price) %}
     round(safe_divide(cast({{ list_price }} as numeric) - cast({{ cost_price }} as numeric), cast({{ list_price }} as numeric)) * 100, 2)
 {% endmacro %}
 ```
-Esta macro utiliza `safe_divide` nativo de BigQuery para proteger los modelos contra divisiones por cero o valores nulos imprevistos.
-
----
-
-## 🚀 Guía de Reproducción Local
-
-Cualquier persona puede clonar este repositorio y ejecutar el pipeline completo en su propio entorno:
-
-### 1. Clonar el repositorio y crear entorno virtual
-```bash
-git clone https://github.com/rubenbarrios-bigdata/retail-analytics-dbt.git
-cd retail-analytics-dbt
-python -m venv .venv
-# En Windows:
-.venv\Scripts\activate
-# Instalar dbt y conector de BigQuery:
-pip install dbt-core dbt-bigquery
-```
-
-### 2. Configurar perfil de conexión (`profiles.yml`)
-En `~/.dbt/profiles.yml` (en Windows: `C:\Users\<usuario>\.dbt\profiles.yml`):
-```yaml
-retail_analytics:
-  target: dev
-  outputs:
-    dev:
-      type: bigquery
-      method: service-account
-      project: TU_PROJECT_ID_GCP
-      dataset: dbt_dev
-      threads: 4
-      keyfile: /ruta/segura/a/tu/clave_service_account.json
-      location: US
-```
-
-### 3. Ejecutar el pipeline de dbt
-```bash
-# 1. Validar conexión
-dbt debug
-
-# 2. Cargar los datos crudos a BigQuery
-dbt seed
-
-# 3. Compilar y materializar modelos (vistas y tablas)
-dbt run
-
-# 4. Ejecutar las 28 pruebas de calidad de datos
-dbt test
-
-# 5. Generar y servir la documentación interactiva con el grafo DAG
-dbt docs generate
-dbt docs serve
-```
+De esta forma, cualquier reporte comercial utiliza exactamente la misma definición de margen.
 
 ---
 
 ## 📈 Conexión con Power BI
-Los modelos finales en la capa **Marts** (`dim_customers`, `dim_products` y `fct_orders`) se conectan directamente desde Power BI mediante el conector nativo de **Google BigQuery**, permitiendo crear esquemas en estrella limpios sin necesidad de realizar transformaciones complejas en Power Query.
+
+Al abrir Power BI:
+1. Conectar mediante el conector nativo de **Google BigQuery**.
+2. Seleccionar el dataset `dbt_dev` y marcar las 3 tablas preparadas: `dim_customers`, `dim_products` y `fct_orders`.
+3. Relacionar mediante `customer_id` y `product_id`.
+4. Como las métricas clave ya están precalculadas en dbt, el modelo en Power BI queda liviano, rápido y sin fórmulas DAX excesivas.
+
+---
+
+## 🚀 Cómo Reproducir este Proyecto Localmente
+
+1. **Clonar este repositorio:**
+   ```bash
+   git clone https://github.com/rubenbarrios-bigdata/retail-analytics-dbt.git
+   cd retail-analytics-dbt
+   ```
+
+2. **Crear y activar entorno virtual en Windows:**
+   ```powershell
+   python -m venv .venv
+   .venv\Scripts\activate
+   pip install dbt-core dbt-bigquery
+   ```
+
+3. **Configurar credenciales:**
+   Configurar el archivo `profiles.yml` en la carpeta `~/.dbt/` apuntando a tu proyecto de Google Cloud BigQuery.
+
+4. **Ejecutar el pipeline de dbt:**
+   ```powershell
+   # 1. Comprobar conexión
+   dbt debug
+
+   # 2. Cargar datos de prueba (1,000 órdenes y 200 clientes)
+   dbt seed
+
+   # 3. Limpiar y modelar los datos
+   dbt run
+
+   # 4. Correr las pruebas de calidad
+   dbt test
+
+   # 5. Ver la documentación interactiva en el navegador
+   dbt docs generate
+   dbt docs serve
+   ```
