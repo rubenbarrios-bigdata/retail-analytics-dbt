@@ -14,5 +14,5 @@ Esta carpeta contiene los archivos de datos originales en formato CSV antes de s
    * **`raw_orders.csv`** (1,000 filas): Órdenes de compra con fecha, estado (`completed`, `returned`, `cancelled`, etc.) y canal de adquisición.
    * **`raw_order_items.csv`** (1,794 filas): Detalle línea por línea de productos adquiridos en cada orden con cantidades y descuentos.
 
-> **Nota técnica:**  
-> Para la ejecución del pipeline con dbt, las 4 tablas normalizadas se encuentran también en la carpeta `seeds/` para permitir su carga directa y automática en BigQuery mediante el comando `dbt seed`.
+> **Nota:**  
+> Para trabajar en dbt, las 4 tablas se encuentran organizadas en la carpeta `seeds/` para cargarlas a BigQuery mediante el comando `dbt seed`.

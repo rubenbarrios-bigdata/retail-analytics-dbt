@@ -164,7 +164,7 @@ Al abrir Power BI:
 3. **Configurar credenciales:**
    Configurar el archivo `profiles.yml` en la carpeta `~/.dbt/` apuntando a tu proyecto de Google Cloud BigQuery.
 
-4. **Ejecutar el pipeline de dbt:**
+4. **Ejecutar el modelado en dbt:**
    ```powershell
    # 1. Comprobar conexión
    dbt debug
