@@ -36,21 +36,21 @@ El flujo sigue las mejores prácticas de la analítica moderna:
 
 ```mermaid
 graph LR
-    subgraph 1. Datos Crudos (BigQuery)
-        A[(Clientes)]
-        B[(Productos)]
-        C[(Órdenes)]
-        D[(Detalle Órdenes)]
+    subgraph S1 ["1. Datos Crudos en BigQuery"]
+        A[("Clientes")]
+        B[("Productos")]
+        C[("Órdenes")]
+        D[("Detalle de Órdenes")]
     end
 
-    subgraph 2. Mi Trabajo en dbt (SQL)
-        E[Limpieza y Estandarización<br/>Capa Staging]
-        F[Tablas de Negocio Consolidadas<br/>Capa Analítica]
-        G{Pruebas de Calidad<br/>28 Tests}
+    subgraph S2 ["2. Modelado con dbt"]
+        E["Vistas de Limpieza (Staging)"]
+        F["Tablas Analíticas (Marts)"]
+        G{"Control de Calidad (28 Tests)"}
     end
 
-    subgraph 3. Visualización y Toma de Decisiones
-        H[Power BI / Reportes Gerenciales]
+    subgraph S3 ["3. Reportes"]
+        H["Power BI / Dashboards"]
     end
 
     A --> E
