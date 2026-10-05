@@ -1,0 +1,201 @@
+customer_id,first_name,last_name,email,city,country,signup_date
+101,Julian,Torres,julian.torres101@example.com,Madrid,Spain,2024-10-08
+102,Isabella,Herrera,isabella.herrera102@example.com,Guadalajara,Mexico,2024-04-14
+103,Emilia,Flores,emilia.flores103@example.com,Rio de Janeiro,Brazil,2024-03-30
+104,Nicolas,Romero,nicolas.romero104@example.com,Barcelona,Spain,2024-01-31
+105,Mateo,Castro,mateo.castro105@example.com,Cordoba,Argentina,2025-06-01
+106,Valeria,Rodriguez,valeria.rodriguez106@example.com,Rio de Janeiro,Brazil,2024-07-22
+107,Felipe,Contreras,felipe.contreras107@example.com,Rio de Janeiro,Brazil,2025-03-05
+108,Isabella,Ortega,isabella.ortega108@example.com,Montevideo,Uruguay,2024-10-11
+109,Renata,Rodriguez,renata.rodriguez109@example.com,Monterrey,Mexico,2025-03-08
+110,Gabriel,Rojas,gabriel.rojas110@example.com,Guadalajara,Mexico,2024-08-08
+111,Andres,Fernandez,andres.fernandez111@example.com,Mexico City,Mexico,2024-04-04
+112,Joaquin,Torres,joaquin.torres112@example.com,Cali,Colombia,2024-12-18
+113,Valeria,Rojas,valeria.rojas113@example.com,Barcelona,Spain,2025-04-15
+114,Catalina,Torres,catalina.torres114@example.com,Santiago,Chile,2024-03-21
+115,Catalina,Mendoza,catalina.mendoza115@example.com,San Jose,Costa Rica,2025-01-05
+116,Nicolas,Castro,nicolas.castro116@example.com,Valencia,Spain,2024-02-16
+117,Emilia,Herrera,emilia.herrera117@example.com,Bogota,Colombia,2024-03-22
+118,Agustina,Herrera,agustina.herrera118@example.com,Mexico City,Mexico,2025-01-24
+119,Sebastian,Ortega,sebastian.ortega119@example.com,Cali,Colombia,2024-06-15
+120,Mariana,Perez,mariana.perez120@example.com,Buenos Aires,Argentina,2025-11-17
+121,Sebastian,Espinoza,sebastian.espinoza121@example.com,Valencia,Spain,2025-09-15
+122,Julian,Morales,julian.morales122@example.com,Rio de Janeiro,Brazil,2024-09-07
+123,Valentina,Ortega,valentina.ortega123@example.com,Santiago,Chile,2024-10-03
+124,Clara,Contreras,clara.contreras124@example.com,Rio de Janeiro,Brazil,2024-08-12
+125,Emilia,Fernandez,emilia.fernandez125@example.com,Barcelona,Spain,2024-08-22
+126,Tomas,Silva,tomas.silva126@example.com,Medellin,Colombia,2025-02-14
+127,Sebastian,Gonzalez,sebastian.gonzalez127@example.com,Buenos Aires,Argentina,2025-08-03
+128,Esteban,Espinoza,esteban.espinoza128@example.com,Medellin,Colombia,2024-08-05
+129,Julian,Acosta,julian.acosta129@example.com,Santiago,Chile,2025-10-20
+130,Daniel,Vargas,daniel.vargas130@example.com,Rosario,Argentina,2024-05-22
+131,Isabella,Flores,isabella.flores131@example.com,Rio de Janeiro,Brazil,2025-07-05
+132,Sebastian,Flores,sebastian.flores132@example.com,Montevideo,Uruguay,2025-03-14
+133,Esteban,Bravo,esteban.bravo133@example.com,Santiago,Chile,2025-01-05
+134,Isabella,Vargas,isabella.vargas134@example.com,Sao Paulo,Brazil,2025-05-20
+135,Mateo,Silva,mateo.silva135@example.com,Mexico City,Mexico,2024-06-05
+136,Julian,Morales,julian.morales136@example.com,Valparaiso,Chile,2025-09-02
+137,Mateo,Navarro,mateo.navarro137@example.com,Santiago,Chile,2025-09-02
+138,Daniel,Alvarez,daniel.alvarez138@example.com,Rosario,Argentina,2025-07-20
+139,Agustina,Rodriguez,agustina.rodriguez139@example.com,Mexico City,Mexico,2025-11-29
+140,Esteban,Blanco,esteban.blanco140@example.com,Rosario,Argentina,2025-10-18
+141,Gabriel,Torres,gabriel.torres141@example.com,Bogota,Colombia,2025-03-21
+142,Valentina,Ortega,valentina.ortega142@example.com,Madrid,Spain,2024-09-26
+143,Martin,Morales,martin.morales143@example.com,Sao Paulo,Brazil,2024-04-18
+144,Agustina,Contreras,agustina.contreras144@example.com,Bogota,Colombia,2025-10-16
+145,Martin,Cabrera,martin.cabrera145@example.com,Buenos Aires,Argentina,2024-06-05
+146,Mariana,Morales,mariana.morales146@example.com,Rio de Janeiro,Brazil,2025-06-27
+147,Clara,Rodriguez,clara.rodriguez147@example.com,San Jose,Costa Rica,2024-11-27
+148,Paula,Rodriguez,paula.rodriguez148@example.com,Mexico City,Mexico,2025-01-06
+149,Esteban,Mendoza,esteban.mendoza149@example.com,Cordoba,Argentina,2024-02-29
+150,Isabella,Bravo,isabella.bravo150@example.com,Valencia,Spain,2024-03-28
+151,Victoria,Acosta,victoria.acosta151@example.com,Valencia,Spain,2025-06-29
+152,Andres,Vargas,andres.vargas152@example.com,Guadalajara,Mexico,2025-11-06
+153,Paula,Blanco,paula.blanco153@example.com,Monterrey,Mexico,2024-09-28
+154,Martin,Cabrera,martin.cabrera154@example.com,Valparaiso,Chile,2024-08-04
+155,Clara,Blanco,clara.blanco155@example.com,Buenos Aires,Argentina,2024-11-15
+156,Joaquin,Delgado,joaquin.delgado156@example.com,Cali,Colombia,2025-03-24
+157,Esteban,Alvarez,esteban.alvarez157@example.com,Lima,Peru,2024-05-03
+158,Isabella,Herrera,isabella.herrera158@example.com,Valencia,Spain,2024-12-12
+159,Sofia,Bravo,sofia.bravo159@example.com,Rio de Janeiro,Brazil,2024-08-23
+160,Nicolas,Herrera,nicolas.herrera160@example.com,Madrid,Spain,2024-03-13
+161,Felipe,Contreras,felipe.contreras161@example.com,Barcelona,Spain,2024-08-22
+162,Mateo,Silva,mateo.silva162@example.com,Medellin,Colombia,2024-03-13
+163,Martin,Herrera,martin.herrera163@example.com,Rosario,Argentina,2025-11-16
+164,Paula,Castro,paula.castro164@example.com,Rio de Janeiro,Brazil,2024-05-15
+165,Victoria,Bravo,victoria.bravo165@example.com,Montevideo,Uruguay,2025-04-29
+166,Isabella,Acosta,isabella.acosta166@example.com,Valparaiso,Chile,2024-07-13
+167,Camila,Torres,camila.torres167@example.com,Valparaiso,Chile,2024-12-28
+168,Elena,Romero,elena.romero168@example.com,Lima,Peru,2024-02-25
+169,Emilia,Contreras,emilia.contreras169@example.com,Mexico City,Mexico,2024-03-03
+170,Joaquin,Flores,joaquin.flores170@example.com,Medellin,Colombia,2024-04-21
+171,Isabella,Castro,isabella.castro171@example.com,Buenos Aires,Argentina,2025-07-03
+172,Daniel,Vargas,daniel.vargas172@example.com,Valparaiso,Chile,2024-07-06
+173,Sebastian,Ortega,sebastian.ortega173@example.com,Cordoba,Argentina,2024-03-18
+174,Daniel,Blanco,daniel.blanco174@example.com,Mexico City,Mexico,2024-02-21
+175,Julian,Blanco,julian.blanco175@example.com,Madrid,Spain,2024-04-05
+176,Clara,Herrera,clara.herrera176@example.com,Monterrey,Mexico,2025-02-20
+177,Paula,Acosta,paula.acosta177@example.com,Buenos Aires,Argentina,2025-02-14
+178,Esteban,Silva,esteban.silva178@example.com,Monterrey,Mexico,2025-01-23
+179,Sofia,Navarro,sofia.navarro179@example.com,Rosario,Argentina,2025-04-10
+180,Lucia,Romero,lucia.romero180@example.com,Rio de Janeiro,Brazil,2025-11-08
+181,Felipe,Acosta,felipe.acosta181@example.com,Guadalajara,Mexico,2024-07-13
+182,Lucia,Castro,lucia.castro182@example.com,Barcelona,Spain,2025-08-16
+183,Victoria,Blanco,victoria.blanco183@example.com,Barcelona,Spain,2024-11-17
+184,Lucas,Silva,lucas.silva184@example.com,Montevideo,Uruguay,2025-05-03
+185,Martin,Alvarez,martin.alvarez185@example.com,Monterrey,Mexico,2024-02-28
+186,Martin,Gonzalez,martin.gonzalez186@example.com,Monterrey,Mexico,2024-03-11
+187,Valeria,Gonzalez,valeria.gonzalez187@example.com,Cordoba,Argentina,2025-02-17
+188,Camila,Bravo,camila.bravo188@example.com,Cordoba,Argentina,2025-08-15
+189,Valeria,Silva,valeria.silva189@example.com,San Jose,Costa Rica,2024-03-24
+190,Elena,Delgado,elena.delgado190@example.com,Montevideo,Uruguay,2025-08-01
+191,Martin,Fernandez,martin.fernandez191@example.com,Rosario,Argentina,2024-07-28
+192,Emilia,Espinoza,emilia.espinoza192@example.com,Medellin,Colombia,2024-09-01
+193,Sebastian,Navarro,sebastian.navarro193@example.com,Guadalajara,Mexico,2025-11-18
+194,Julian,Mendoza,julian.mendoza194@example.com,Lima,Peru,2024-11-19
+195,Clara,Gonzalez,clara.gonzalez195@example.com,Madrid,Spain,2025-04-14
+196,Valeria,Bravo,valeria.bravo196@example.com,Mexico City,Mexico,2024-03-16
+197,Catalina,Castro,catalina.castro197@example.com,Sao Paulo,Brazil,2024-09-28
+198,Alejandro,Perez,alejandro.perez198@example.com,Valencia,Spain,2024-09-07
+199,Mariana,Mendoza,mariana.mendoza199@example.com,Monterrey,Mexico,2025-03-24
+200,Tomas,Blanco,tomas.blanco200@example.com,Bogota,Colombia,2025-09-18
+201,Renata,Contreras,renata.contreras201@example.com,Sao Paulo,Brazil,2024-01-09
+202,Emilia,Blanco,emilia.blanco202@example.com,Bogota,Colombia,2025-11-10
+203,Camila,Vargas,camila.vargas203@example.com,Rosario,Argentina,2024-04-28
+204,Esteban,Torres,esteban.torres204@example.com,Rio de Janeiro,Brazil,2024-06-08
+205,Sebastian,Mendoza,sebastian.mendoza205@example.com,San Jose,Costa Rica,2024-08-03
+206,Felipe,Fernandez,felipe.fernandez206@example.com,Buenos Aires,Argentina,2025-10-11
+207,Agustina,Rojas,agustina.rojas207@example.com,Sao Paulo,Brazil,2025-05-15
+208,Sebastian,Silva,sebastian.silva208@example.com,Valencia,Spain,2025-10-11
+209,Elena,Rojas,elena.rojas209@example.com,Barcelona,Spain,2024-01-04
+210,Gabriel,Vargas,gabriel.vargas210@example.com,Rosario,Argentina,2024-06-14
+211,Victoria,Ortega,victoria.ortega211@example.com,Rio de Janeiro,Brazil,2025-03-13
+212,Catalina,Rodriguez,catalina.rodriguez212@example.com,Mexico City,Mexico,2024-03-18
+213,Esteban,Espinoza,esteban.espinoza213@example.com,Guadalajara,Mexico,2025-07-12
+214,Lucas,Perez,lucas.perez214@example.com,Montevideo,Uruguay,2025-07-19
+215,Alejandro,Romero,alejandro.romero215@example.com,Guadalajara,Mexico,2024-02-12
+216,Lucia,Perez,lucia.perez216@example.com,Barcelona,Spain,2025-01-01
+217,Diego,Delgado,diego.delgado217@example.com,Cordoba,Argentina,2025-11-13
+218,Camila,Perez,camila.perez218@example.com,Rio de Janeiro,Brazil,2025-02-20
+219,Valeria,Flores,valeria.flores219@example.com,Guadalajara,Mexico,2024-08-30
+220,Agustina,Morales,agustina.morales220@example.com,Monterrey,Mexico,2025-02-26
+221,Sofia,Morales,sofia.morales221@example.com,Medellin,Colombia,2025-02-25
+222,Renata,Delgado,renata.delgado222@example.com,Cordoba,Argentina,2024-09-30
+223,Valentina,Espinoza,valentina.espinoza223@example.com,Mexico City,Mexico,2025-01-26
+224,Agustina,Silva,agustina.silva224@example.com,Arequipa,Peru,2024-08-15
+225,Diego,Ortega,diego.ortega225@example.com,Cali,Colombia,2024-11-08
+226,Tomas,Herrera,tomas.herrera226@example.com,Cordoba,Argentina,2024-01-25
+227,Emilia,Castro,emilia.castro227@example.com,Santiago,Chile,2024-12-02
+228,Sebastian,Gonzalez,sebastian.gonzalez228@example.com,Rosario,Argentina,2024-12-25
+229,Julian,Alvarez,julian.alvarez229@example.com,Santiago,Chile,2025-11-26
+230,Tomas,Blanco,tomas.blanco230@example.com,Medellin,Colombia,2024-01-29
+231,Camila,Rojas,camila.rojas231@example.com,Monterrey,Mexico,2025-08-17
+232,Sebastian,Silva,sebastian.silva232@example.com,Mexico City,Mexico,2025-09-02
+233,Elena,Perez,elena.perez233@example.com,Medellin,Colombia,2025-03-22
+234,Valeria,Alvarez,valeria.alvarez234@example.com,Mexico City,Mexico,2025-01-29
+235,Esteban,Bravo,esteban.bravo235@example.com,Buenos Aires,Argentina,2024-09-17
+236,Lucas,Espinoza,lucas.espinoza236@example.com,Valparaiso,Chile,2024-01-02
+237,Martin,Blanco,martin.blanco237@example.com,Buenos Aires,Argentina,2025-01-07
+238,Elena,Gonzalez,elena.gonzalez238@example.com,Medellin,Colombia,2025-09-30
+239,Gabriel,Delgado,gabriel.delgado239@example.com,Mexico City,Mexico,2024-11-03
+240,Martin,Mendoza,martin.mendoza240@example.com,Valparaiso,Chile,2024-11-30
+241,Joaquin,Espinoza,joaquin.espinoza241@example.com,Bogota,Colombia,2025-07-21
+242,Alejandro,Castro,alejandro.castro242@example.com,Valparaiso,Chile,2025-11-11
+243,Joaquin,Delgado,joaquin.delgado243@example.com,Monterrey,Mexico,2025-09-22
+244,Nicolas,Mendoza,nicolas.mendoza244@example.com,Santiago,Chile,2025-07-15
+245,Tomas,Rodriguez,tomas.rodriguez245@example.com,Bogota,Colombia,2024-10-20
+246,Diego,Romero,diego.romero246@example.com,Montevideo,Uruguay,2025-09-13
+247,Julian,Fernandez,julian.fernandez247@example.com,Lima,Peru,2025-03-28
+248,Daniel,Delgado,daniel.delgado248@example.com,Buenos Aires,Argentina,2025-06-07
+249,Paula,Flores,paula.flores249@example.com,Monterrey,Mexico,2025-11-05
+250,Mateo,Mendoza,mateo.mendoza250@example.com,Sao Paulo,Brazil,2025-11-10
+251,Julian,Cabrera,julian.cabrera251@example.com,Medellin,Colombia,2024-04-05
+252,Tomas,Herrera,tomas.herrera252@example.com,Bogota,Colombia,2024-08-18
+253,Renata,Castro,renata.castro253@example.com,Guadalajara,Mexico,2024-01-26
+254,Lucas,Herrera,lucas.herrera254@example.com,Arequipa,Peru,2025-09-17
+255,Agustina,Gonzalez,agustina.gonzalez255@example.com,Lima,Peru,2025-02-28
+256,Esteban,Contreras,esteban.contreras256@example.com,Montevideo,Uruguay,2024-07-18
+257,Felipe,Espinoza,felipe.espinoza257@example.com,Santiago,Chile,2025-05-21
+258,Joaquin,Herrera,joaquin.herrera258@example.com,Guadalajara,Mexico,2025-11-02
+259,Felipe,Rodriguez,felipe.rodriguez259@example.com,Mexico City,Mexico,2025-03-11
+260,Isabella,Morales,isabella.morales260@example.com,Sao Paulo,Brazil,2025-04-20
+261,Lucas,Blanco,lucas.blanco261@example.com,Cordoba,Argentina,2024-05-04
+262,Daniel,Vargas,daniel.vargas262@example.com,Lima,Peru,2025-11-14
+263,Martin,Blanco,martin.blanco263@example.com,San Jose,Costa Rica,2024-11-20
+264,Andres,Ortega,andres.ortega264@example.com,San Jose,Costa Rica,2025-05-31
+265,Elena,Blanco,elena.blanco265@example.com,Lima,Peru,2024-06-11
+266,Victoria,Acosta,victoria.acosta266@example.com,Lima,Peru,2024-09-22
+267,Andres,Herrera,andres.herrera267@example.com,Rosario,Argentina,2025-06-17
+268,Paula,Contreras,paula.contreras268@example.com,Cordoba,Argentina,2024-10-08
+269,Daniel,Gonzalez,daniel.gonzalez269@example.com,Bogota,Colombia,2024-08-28
+270,Sebastian,Fernandez,sebastian.fernandez270@example.com,Medellin,Colombia,2025-07-07
+271,Mateo,Vargas,mateo.vargas271@example.com,Guadalajara,Mexico,2024-08-24
+272,Joaquin,Espinoza,joaquin.espinoza272@example.com,Guadalajara,Mexico,2024-08-07
+273,Mateo,Romero,mateo.romero273@example.com,Valparaiso,Chile,2024-12-04
+274,Catalina,Ortega,catalina.ortega274@example.com,Valparaiso,Chile,2024-03-04
+275,Diego,Romero,diego.romero275@example.com,Santiago,Chile,2025-08-21
+276,Felipe,Rodriguez,felipe.rodriguez276@example.com,Montevideo,Uruguay,2025-01-24
+277,Paula,Rodriguez,paula.rodriguez277@example.com,Cali,Colombia,2024-11-01
+278,Andres,Navarro,andres.navarro278@example.com,Valparaiso,Chile,2025-07-05
+279,Victoria,Flores,victoria.flores279@example.com,Rio de Janeiro,Brazil,2025-09-09
+280,Esteban,Herrera,esteban.herrera280@example.com,Arequipa,Peru,2024-08-12
+281,Sebastian,Romero,sebastian.romero281@example.com,Arequipa,Peru,2024-01-30
+282,Joaquin,Fernandez,joaquin.fernandez282@example.com,Santiago,Chile,2024-06-18
+283,Tomas,Ortega,tomas.ortega283@example.com,Guadalajara,Mexico,2025-09-29
+284,Catalina,Rodriguez,catalina.rodriguez284@example.com,Santiago,Chile,2025-08-29
+285,Nicolas,Delgado,nicolas.delgado285@example.com,Madrid,Spain,2024-03-26
+286,Julian,Romero,julian.romero286@example.com,Guadalajara,Mexico,2025-04-17
+287,Valentina,Silva,valentina.silva287@example.com,Rosario,Argentina,2025-01-23
+288,Gabriel,Castro,gabriel.castro288@example.com,Lima,Peru,2024-11-30
+289,Gabriel,Navarro,gabriel.navarro289@example.com,Rosario,Argentina,2025-03-07
+290,Sebastian,Gonzalez,sebastian.gonzalez290@example.com,Arequipa,Peru,2024-01-20
+291,Victoria,Blanco,victoria.blanco291@example.com,Barcelona,Spain,2024-12-24
+292,Isabella,Contreras,isabella.contreras292@example.com,Valencia,Spain,2025-10-29
+293,Lucas,Rodriguez,lucas.rodriguez293@example.com,Cordoba,Argentina,2024-07-23
+294,Tomas,Rodriguez,tomas.rodriguez294@example.com,San Jose,Costa Rica,2024-06-05
+295,Isabella,Vargas,isabella.vargas295@example.com,Arequipa,Peru,2025-11-16
+296,Camila,Bravo,camila.bravo296@example.com,Buenos Aires,Argentina,2025-04-21
+297,Felipe,Rojas,felipe.rojas297@example.com,Cali,Colombia,2024-06-20
+298,Valeria,Cabrera,valeria.cabrera298@example.com,Mexico City,Mexico,2024-06-16
+299,Lucia,Torres,lucia.torres299@example.com,Montevideo,Uruguay,2024-01-27
+300,Clara,Mendoza,clara.mendoza300@example.com,Montevideo,Uruguay,2025-11-24

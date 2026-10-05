@@ -30,6 +30,23 @@ Este modelo de datos fue diseñado para que el equipo comercial y de marketing p
 
 ---
 
+## 📂 Origen y Fuente de los Datos (Data Source)
+
+Los datos crudos de este proyecto consisten en un **dataset sintético de comercio minorista (*Retail & E-commerce*)** estructurado para emular la actividad transaccional de un negocio omnicanal (*Web*, *App móvil*, *Tienda física*).
+
+* **Ubicación en el repositorio:**
+  * [`data/`](data/): Contiene el dataset crudo original consolidado ([`raw_retail_transactions.csv`](data/raw_retail_transactions.csv)) y las tablas de origen en CSV.
+  * [`seeds/`](seeds/): Archivos CSV estructurados para la ingesta y versionado directo en dbt.
+* **Carga en el Data Warehouse:** Se cargan directamente en Google BigQuery mediante el comando `dbt seed`.
+* **Seguridad y Privacidad:** No expone información real de clientes (datos sintéticos sin PII con correos `@example.com`).
+* **Estructura de las tablas crudas:**
+  * `raw_customers` (200 filas): Maestro de clientes, ubicación geográfica y fecha de registro.
+  * `raw_products` (36 filas): Catálogo comercial con costos y precios de venta sugeridos.
+  * `raw_orders` (1,000 filas): Encabezado de órdenes de compra con canal y estado del pedido.
+  * `raw_order_items` (1,794 filas): Detalle de ítems por orden, cantidades y descuentos.
+
+---
+
 ## 🔄 Flujo de Trabajo del Analista
 
 El flujo sigue las mejores prácticas de la analítica moderna:

@@ -1,0 +1,36 @@
+product_id,product_name,category,cost_price,list_price
+201,Wireless Noise-Canceling Headphones,Electronics,65.00,129.99
+202,Smart Fitness Watch v2,Electronics,45.00,89.99
+203,Mechanical RGB Keyboard,Electronics,40.00,79.50
+204,Ultra HD 27-inch Monitor,Electronics,160.00,289.00
+205,Fast Wireless Charging Pad,Electronics,12.00,29.99
+206,Bluetooth Portable Speaker,Electronics,25.00,59.99
+207,USB-C Multiport Adapter Hub,Electronics,18.00,42.00
+208,High-Speed External SSD 1TB,Electronics,55.00,119.99
+209,True Wireless Earbuds Pro,Electronics,38.00,84.99
+210,Ergonomic Vertical Mouse,Electronics,20.00,49.99
+211,Smart Home Security Camera,Electronics,35.00,74.99
+212,Streaming Microphone Kit,Electronics,45.00,99.00
+213,Ergonomic Office Chair,Furniture,110.00,219.00
+214,Adjustable Standing Desk,Furniture,180.00,349.99
+215,Monitor Riser with Drawer,Furniture,22.00,49.99
+216,Compact Bookcase 4-Tier,Furniture,40.00,89.50
+217,Desk Lamp with Wireless Charger,Furniture,20.00,45.00
+218,Memory Foam Lumbar Pillow,Furniture,14.00,32.00
+219,Under-Desk Cable Tray,Furniture,10.00,24.50
+220,Footrest with Massage Texture,Furniture,16.00,36.00
+221,Organic Cotton Hoodie,Apparel,18.00,45.00
+222,Water-Resistant Backpack,Apparel,24.00,59.99
+223,Breathable Running Shoes,Apparel,35.00,85.00
+224,Performance Athletic T-Shirt,Apparel,10.00,28.00
+225,Windbreaker Light Jacket,Apparel,28.00,65.00
+226,Thermal Winter Beanie,Apparel,6.00,18.00
+227,Compression Sport Socks 3-Pack,Apparel,5.00,15.00
+228,Lightweight Travel Duffel Bag,Apparel,22.00,52.00
+229,Stainless Steel Water Bottle,Accessories,6.50,19.99
+230,Polarized Sport Sunglasses,Accessories,15.00,39.99
+231,Minimalist Leather Wallet,Accessories,14.00,34.50
+232,Laptop Sleeve Protective Case,Accessories,12.00,27.99
+233,Universal Travel Power Adapter,Accessories,9.00,22.50
+234,Silicone Keyring Organizer,Accessories,4.00,12.00
+235,UV Sanitizer Travel Case,Accessories,15.00,35.00
