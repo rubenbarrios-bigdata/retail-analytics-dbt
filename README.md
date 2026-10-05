@@ -15,13 +15,13 @@ En las empresas de comercio minorista (*Retail & E-commerce*), los datos de vent
 Como **Analista de Datos**, en lugar de intentar limpiar millones de filas en hojas de cálculo o sobrecargar Power Query con transformaciones lentas, utilicé **dbt Core** para:
 1. **Limpiar y estandarizar los datos crudos** directamente dentro de BigQuery usando SQL.
 2. **Construir tablas analíticas consolidadas** con las métricas comerciales ya calculadas (Ventas netas, márgenes de ganancia, ticket promedio y segmentación de clientes).
-3. **Validar la calidad de los datos** con pruebas automáticas para asegurar que ningún gráfico en Power BI muestre datos erróneos o incompletos.
+3. **Validar la calidad de los datos** con pruebas automáticas para asegurar que ningún gráfico en Power BI / Data Studio muestre datos erróneos o incompletos.
 
 ---
 
 ## 🎯 Preguntas de Negocio que responde este Proyecto
 
-Este modelo de datos fue diseñado para que el equipo comercial y de marketing pueda responder rápidamente en Power BI preguntas como:
+Este modelo de datos fue diseñado para que el equipo comercial y de marketing pueda responder rápidamente en Power BI / Data Studio preguntas como:
 
 * **Rendimiento de Ventas:** ¿Cuánto vendemos en bruto vs. cuánto descontamos en promociones? ¿Cuál es la facturación neta mensual?
 * **Comportamiento de Clientes:** ¿Quiénes son nuestros clientes más valiosos (*VIP*)? ¿Qué porcentaje de clientes registrados aún no realiza su primera compra (*Prospects*)?
@@ -68,7 +68,7 @@ graph LR
     end
 
     subgraph S3 ["3. Reportes"]
-        H["Power BI / Dashboards"]
+        H["Power BI / Data Studio"]
     end
 
     A --> E
@@ -85,7 +85,7 @@ graph LR
 
 ## 📊 Tablas Analíticas Creadas para los Reportes
 
-El proyecto organiza los datos en tablas limpias y listas para conectar directamente con Power BI:
+El proyecto organiza los datos en tablas limpias y listas para conectar directamente con Power BI / Data Studio:
 
 ### 1. `fct_orders` (Resumen de Órdenes de Venta)
 * **Objetivo:** Permite analizar las ventas a nivel de cada pedido.
