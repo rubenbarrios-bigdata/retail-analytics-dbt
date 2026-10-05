@@ -10,7 +10,7 @@ renamed as (
         cast(cost_price as numeric) as cost_price,
         cast(list_price as numeric) as list_price,
         round(cast(list_price as numeric) - cast(cost_price as numeric), 2) as unit_margin,
-        {{ calculate_margin_pct('list_price', 'cost_price') }} as margin_percentage
+        round(safe_divide(cast(list_price as numeric) - cast(cost_price as numeric), cast(list_price as numeric)) * 100, 2) as margin_percentage
     from source
 )
 

@@ -123,19 +123,6 @@ Para evitar eso, definí **28 pruebas automáticas** que se ejecutan en BigQuery
 
 ---
 
-## 💡 Cálculo Consistente de Márgenes (Macro en Jinja)
-
-Para que ningún analista del equipo calcule el margen de ganancia de forma distinta o cometa errores al dividir por cero, creamos una fórmula estandarizada y reutilizable en [`macros/calculate_margin_pct.sql`](file:///c:/Users/ismar/Downloads/dbt/macros/calculate_margin_pct.sql):
-
-```sql
-{% macro calculate_margin_pct(list_price, cost_price) %}
-    round(safe_divide(cast({{ list_price }} as numeric) - cast({{ cost_price }} as numeric), cast({{ list_price }} as numeric)) * 100, 2)
-{% endmacro %}
-```
-De esta forma, cualquier reporte comercial utiliza exactamente la misma definición de margen.
-
----
-
 ## 📈 Conexión con Herramientas de BI (Power BI / Data Studio)
 
 Al conectar con **Power BI** o **Data Studio (Looker Studio)**:
