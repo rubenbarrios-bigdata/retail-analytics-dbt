@@ -4,7 +4,7 @@ Este documento detalla la segunda etapa del proyecto **Retail Analytics**: la co
 
 ![Dashboard Ejecutivo Power BI + BigQuery](../assets/dashboard_powerbi_bigquery.png)
 
-> 🔗 **Enlace en Power BI Service:** [Ver Dashboard Ejecutivo en Power BI Service](https://app.powerbi.com/groups/me/reports/e711ecc6-2b4d-444a-9065-9f9e82b8cc5f/dc6e54048909792c2769?experience=power-bi)
+> 🌐 **Explora el Dashboard Interactivo en Vivo (Acceso Público):** [Ver Dashboard Ejecutivo en Power BI Web](https://app.powerbi.com/view?r=eyJrIjoiZDdhMGMyMzktNmEyMC00Yzg0LWE1MWItZWVlY2U1YWUwMWNjIiwidCI6IjgxY2NjYzQzLWI1NjEtNDFmNy05NDgwLWU5ZThmMDI3YzQ0MyIsImMiOjR9)
 
 ---
 
