@@ -1,0 +1,105 @@
+/// Tabla de Hechos de Detalle de Líneas de Pedido (1,794 ítems) que vincula cada orden con su producto, cantidad, descuento, costo y utilidad.
+table stg_order_items
+	lineageTag: e94b9fa4-bdd8-49b8-b520-b87861640883
+
+	column order_item_id
+		dataType: int64
+		formatString: 0
+		lineageTag: b58e924b-435c-488d-baf1-e3f2d639cca1
+		summarizeBy: none
+		sourceColumn: order_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: int64
+		formatString: 0
+		lineageTag: ce8048bc-ee38-4485-a0e1-cbf85660ccab
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d3a981b1-4da6-4383-8f3a-47192033f95c
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 4766a0e0-79f8-4354-a179-096df4568cbe
+		summarizeBy: sum
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price
+		dataType: double
+		lineageTag: 62cd505c-0fcb-4c5e-ade9-7fe76150c8e3
+		summarizeBy: sum
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column discount_amount
+		dataType: double
+		lineageTag: e2e06579-c2ce-4c99-bb58-0349a952e27f
+		summarizeBy: sum
+		sourceColumn: discount_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column item_gross_amount
+		dataType: double
+		lineageTag: 1ac7dc5f-05ff-4a4a-aaee-f2a64c14cd7d
+		summarizeBy: sum
+		sourceColumn: item_gross_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column item_net_amount
+		dataType: double
+		lineageTag: f2aa9fc1-7a01-4975-922e-bd25a5bfc0ee
+		summarizeBy: sum
+		sourceColumn: item_net_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Costo total directo de la línea (cantidad por costo unitario de catálogo).
+	column item_total_cost = stg_order_items[quantity] * RELATED(dim_products[cost_price])
+		isHidden
+		formatString: $#,##0.00
+		lineageTag: 51a70e1a-469c-4b0e-a887-81193e79ccd9
+
+	/// Utilidad neta de la línea después de descuentos y costo unitario.
+	column item_net_profit = stg_order_items[item_net_amount] - (stg_order_items[quantity] * RELATED(dim_products[cost_price]))
+		isHidden
+		formatString: $#,##0.00
+		lineageTag: a86dfdbe-fb5b-4882-857c-ea975abe1227
+
+	partition stg_order_items = m
+		mode: import
+		source =
+				let
+				  Origen = GoogleBigQuery.Database([BillingProject = null, UseStorageApi = null, ConnectionTimeout = null, CommandTimeout = null]),
+				  #"Navegación 1" = Origen{[Name = "dbt-retail-analytics"]}[Data],
+				  #"Navegación 2" = #"Navegación 1"{[Name = "dbt_dev", Kind = "Schema"]}[Data],
+				  #"Navegación 3" = #"Navegación 2"{[Name = "stg_order_items", Kind = "View"]}[Data]
+				in
+				  #"Navegación 3"
+
+	annotation PBI_ResultType = Table
+

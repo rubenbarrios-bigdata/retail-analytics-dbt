@@ -42,8 +42,7 @@ final as (
         case
             when coalesce(cos.lifetime_spend, 0) >= 600 then 'VIP'
             when coalesce(cos.completed_orders, 0) >= 3 then 'Frequent'
-            when coalesce(cos.completed_orders, 0) >= 1 then 'Active'
-            else 'Prospect'
+            else 'Active'
         end as customer_segment
     from customers c
     left join customer_orders_summary cos

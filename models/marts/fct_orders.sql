@@ -34,7 +34,7 @@ final as (
         coalesce(oia.gross_amount, 0) as gross_amount,
         coalesce(oia.total_discount_amount, 0) as total_discount_amount,
         coalesce(oia.net_amount, 0) as net_amount,
-        case when o.status = 'completed' then true else false end as is_completed_order
+        case when o.status in ('completed', 'processing', 'shipped') then true else false end as is_completed_order
     from orders o
     left join order_items_aggregated oia
         on o.order_id = oia.order_id

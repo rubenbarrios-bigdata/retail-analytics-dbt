@@ -1,0 +1,39 @@
+/// Dimensión de estados operativos del pedido y su agrupación analítica.
+table Estados
+	lineageTag: cbc90a5e-ab61-4589-b9f2-f2067ddfa2eb
+
+	column status
+		isHidden
+		isKey
+		lineageTag: ec405939-da38-4c7a-9d8d-472565933354
+		isNameInferred
+		sourceColumn: fct_orders[status]
+
+	column Estado
+		lineageTag: 5fc68169-5945-4726-95ab-726b34d3678e
+		isNameInferred
+		sourceColumn: [Estado]
+		sortByColumn: 'Orden Estado'
+
+	column 'Grupo de Estado'
+		lineageTag: bd312824-ed31-4437-9314-9b77358e2670
+		isNameInferred
+		sourceColumn: [Grupo de Estado]
+
+	column 'Orden Estado'
+		isHidden
+		lineageTag: b07d9974-4c5f-42aa-9671-21709a59ec9f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Orden Estado]
+
+	partition Estados = calculated
+		mode: import
+		source =
+				ADDCOLUMNS(
+				    DISTINCT(fct_orders[status]),
+				    "Estado", SWITCH(fct_orders[status], "completed", "Completado", "processing", "En Proceso", "shipped", "Enviado", "returned", "Devuelto", "cancelled", "Cancelado", fct_orders[status]),
+				    "Grupo de Estado", SWITCH(fct_orders[status], "completed", "Venta Efectiva", "processing", "Venta Efectiva", "shipped", "Venta Efectiva", "returned", "Fricción / Baja", "cancelled", "Fricción / Baja", "Otro"),
+				    "Orden Estado", SWITCH(fct_orders[status], "completed", 1, "shipped", 2, "processing", 3, "returned", 4, "cancelled", 5, 9)
+				)
+

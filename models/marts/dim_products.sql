@@ -14,11 +14,11 @@ orders as (
 product_sales_aggregated as (
     select
         oi.product_id,
-        count(distinct oi.order_id) as total_orders_count,
-        sum(oi.quantity) as total_units_sold,
-        round(sum(case when o.status = 'completed' then oi.item_gross_amount else 0 end), 2) as total_gross_revenue,
-        round(sum(case when o.status = 'completed' then oi.discount_amount else 0 end), 2) as total_discounts_applied,
-        round(sum(case when o.status = 'completed' then oi.item_net_amount else 0 end), 2) as total_net_revenue
+        count(distinct case when o.status in ('completed', 'processing', 'shipped') then oi.order_id end) as total_orders_count,
+        sum(case when o.status in ('completed', 'processing', 'shipped') then oi.quantity else 0 end) as total_units_sold,
+        round(sum(case when o.status in ('completed', 'processing', 'shipped') then oi.item_gross_amount else 0 end), 2) as total_gross_revenue,
+        round(sum(case when o.status in ('completed', 'processing', 'shipped') then oi.discount_amount else 0 end), 2) as total_discounts_applied,
+        round(sum(case when o.status in ('completed', 'processing', 'shipped') then oi.item_net_amount else 0 end), 2) as total_net_revenue
     from order_items oi
     inner join orders o
         on oi.order_id = o.order_id

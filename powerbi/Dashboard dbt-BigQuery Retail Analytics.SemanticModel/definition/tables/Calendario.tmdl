@@ -1,0 +1,68 @@
+/// Dimensión oficial de Calendario continuo (2024-01-01 a 2026-03-31) para inteligencia temporal.
+table Calendario
+	lineageTag: ff7cd4c5-8c46-4c31-8e5c-f548630bbe59
+	dataCategory: Time
+
+	column Fecha
+		isKey
+		formatString: dd/mm/yyyy
+		lineageTag: 1e06a159-8325-454b-ad7f-2ae56997ba38
+		isNameInferred
+		sourceColumn: [Fecha]
+
+	column Año
+		lineageTag: 17245491-79f0-4c50-aaa8-5d826d069f18
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Año]
+
+	column Trimestre
+		lineageTag: 039e559b-d811-4e38-951a-cb8807949d61
+		isNameInferred
+		sourceColumn: [Trimestre]
+
+	column 'Número de Mes'
+		isHidden
+		lineageTag: ac8de3ee-9469-4fbf-ba6c-06f12206f399
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Número de Mes]
+
+	column Mes
+		lineageTag: 0ceace76-d4be-44f1-a87d-62f76d374288
+		isNameInferred
+		sourceColumn: [Mes]
+		sortByColumn: 'Número de Mes'
+
+	column 'Año y Mes'
+		lineageTag: 409d02a3-722c-4cf3-a1dc-43b5d37e4b97
+		isNameInferred
+		sourceColumn: [Año y Mes]
+
+	column 'Número Día Semana'
+		isHidden
+		lineageTag: d200fc6f-9b67-4c96-83b1-4490a8cfa516
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Número Día Semana]
+
+	column 'Día de la Semana'
+		lineageTag: f2f1ddd0-589e-4eae-b83d-e34c14f7b9f8
+		isNameInferred
+		sourceColumn: [Día de la Semana]
+		sortByColumn: 'Número Día Semana'
+
+	partition Calendario = calculated
+		mode: import
+		source =
+				ADDCOLUMNS(
+				    SELECTCOLUMNS(CALENDAR(DATE(2024, 1, 1), DATE(2026, 3, 31)), "Fecha", [Date]),
+				    "Año", YEAR([Fecha]),
+				    "Trimestre", "T" & FORMAT([Fecha], "q"),
+				    "Número de Mes", MONTH([Fecha]),
+				    "Mes", SWITCH(MONTH([Fecha]), 1, "Ene", 2, "Feb", 3, "Mar", 4, "Abr", 5, "May", 6, "Jun", 7, "Jul", 8, "Ago", 9, "Sep", 10, "Oct", 11, "Nov", 12, "Dic"),
+				    "Año y Mes", FORMAT([Fecha], "yyyy-MM"),
+				    "Número Día Semana", WEEKDAY([Fecha], 2),
+				    "Día de la Semana", SWITCH(WEEKDAY([Fecha], 2), 1, "Lunes", 2, "Martes", 3, "Miércoles", 4, "Jueves", 5, "Viernes", 6, "Sábado", 7, "Domingo")
+				)
+

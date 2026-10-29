@@ -23,7 +23,7 @@ models:
           - not_null
 
   - name: dim_customers
-    description: "Vista 360 de clientes: consolida historial de compras, valor acumulado y clasificación de clientes para marketing."
+    description: "Vista 360 de clientes: consolida historial de compras efectivas, valor acumulado (LTV) y segmentación comercial."
     columns:
       - name: customer_id
         description: "Identificador único de cliente."
@@ -31,14 +31,14 @@ models:
           - unique
           - not_null
       - name: customer_segment
-        description: "Clasificación comercial del cliente según su gasto y recurrencia (VIP, Frequent, Active, Prospect)."
+        description: "Clasificación comercial del cliente según su gasto efectivo y recurrencia (VIP, Frequent, Active)."
         tests:
           - accepted_values:
               arguments:
                 values: ['VIP', 'Frequent', 'Active', 'Prospect']
 
   - name: dim_products
-    description: "Catálogo de productos enriquecido con ventas acumuladas, ingresos generados y margen de ganancia."
+    description: "Catálogo de productos enriquecido con ventas efectivas acumuladas, ingresos netos y margen de ganancia."
     columns:
       - name: product_id
         description: "Código único de producto."

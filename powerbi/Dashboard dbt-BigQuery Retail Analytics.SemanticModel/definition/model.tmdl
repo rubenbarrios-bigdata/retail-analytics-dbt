@@ -1,0 +1,25 @@
+model Model
+	culture: es-ES
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: es-AR
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["dim_customers","dim_products","fct_orders","stg_order_items"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_customers
+ref table dim_products
+ref table fct_orders
+ref table stg_order_items
+ref table Calendario
+ref table Canales
+ref table Estados
+
+ref cultureInfo es-ES
+

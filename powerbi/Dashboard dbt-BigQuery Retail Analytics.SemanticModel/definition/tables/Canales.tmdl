@@ -1,0 +1,39 @@
+/// Dimensión de canales de venta omnicanal (Web, App Móvil, Tienda Física).
+table Canales
+	lineageTag: 29de9e73-ba47-49d9-b0bd-c5e620dab7cf
+
+	column channel
+		isHidden
+		isKey
+		lineageTag: a3ba569a-ca1e-4bdd-8506-71082895099a
+		isNameInferred
+		sourceColumn: fct_orders[channel]
+
+	column Canal
+		lineageTag: a299a975-3531-4fbe-bb3b-5ce524cbbb5a
+		isNameInferred
+		sourceColumn: [Canal]
+		sortByColumn: 'Orden Canal'
+
+	column 'Tipo de Canal'
+		lineageTag: 1cb5dc34-cfe1-49fa-933a-bc372a0ee716
+		isNameInferred
+		sourceColumn: [Tipo de Canal]
+
+	column 'Orden Canal'
+		isHidden
+		lineageTag: 7af9ef7f-42bc-4413-845d-25710da21ba1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Orden Canal]
+
+	partition Canales = calculated
+		mode: import
+		source =
+				ADDCOLUMNS(
+				    DISTINCT(fct_orders[channel]),
+				    "Canal", SWITCH(fct_orders[channel], "web", "Web", "mobile_app", "App Móvil", "in_store", "Tienda Física", fct_orders[channel]),
+				    "Tipo de Canal", IF(fct_orders[channel] = "in_store", "Físico", "Digital"),
+				    "Orden Canal", SWITCH(fct_orders[channel], "web", 1, "mobile_app", 2, "in_store", 3, 9)
+				)
+

@@ -1,0 +1,348 @@
+/// Tabla de Hechos de Órdenes (Mart de dbt en BigQuery) y contenedor central del Catálogo de Medidas DAX.
+table fct_orders
+	lineageTag: b7e4c159-08ef-4bf7-aad3-e324544827ba
+
+	/// Facturación neta total de pedidos efectivos (Completados, En Proceso y Enviados: ,663.86).
+	measure 'Venta Neta' = CALCULATE(SUM(stg_order_items[item_net_amount]), KEEPFILTERS(fct_orders[status] IN {"completed", "processing", "shipped"}))
+		formatString: $#,##0.00
+		displayFolder: 01 KPIs Principales
+		lineageTag: 4a27904b-b90d-4eec-a233-f6f557745f51
+
+	/// Ingreso bruto a precio de lista de pedidos efectivos antes de descuentos (,399.00).
+	measure 'Ingreso Bruto' = CALCULATE(SUM(stg_order_items[item_gross_amount]), KEEPFILTERS(fct_orders[status] IN {"completed", "processing", "shipped"}))
+		formatString: $#,##0.00
+		displayFolder: 01 KPIs Principales
+		lineageTag: 49076d27-9918-4fbb-a216-a07ad1d7d286
+
+	/// Costo directo de mercadería vendida (COGS) de pedidos efectivos (,197.50).
+	measure 'Costo de Ventas' = CALCULATE(SUM(stg_order_items[item_total_cost]), KEEPFILTERS(fct_orders[status] IN {"completed", "processing", "shipped"}))
+		formatString: $#,##0.00
+		displayFolder: 01 KPIs Principales
+		lineageTag: 1fef8dde-8df1-4066-8311-895bec0b435f
+
+	/// Ganancia neta comercial de pedidos efectivos tras descuentos y costo (,466.36).
+	measure 'Utilidad Neta' = [Venta Neta] - [Costo de Ventas]
+		formatString: $#,##0.00
+		displayFolder: 01 KPIs Principales
+		lineageTag: 52a37314-c747-4a4d-842e-f48a7ca44a39
+
+	/// Porcentaje de rentabilidad neta sobre la Venta Neta efectiva (50.47%).
+	measure '% Margen Neto' = DIVIDE([Utilidad Neta], [Venta Neta], BLANK())
+		formatString: 0.00%
+		displayFolder: 01 KPIs Principales
+		lineageTag: 2466ab7a-5979-4ab9-805e-149948dfe77d
+
+	/// Total de órdenes únicas efectivas (889 pedidos).
+	measure 'Pedidos Completados' = CALCULATE(DISTINCTCOUNT(stg_order_items[order_id]), KEEPFILTERS(fct_orders[status] IN {"completed", "processing", "shipped"}))
+		formatString: #,##0
+		displayFolder: 01 KPIs Principales
+		lineageTag: e5e065f0-fbe2-427b-a495-f31d1c953cdc
+
+	/// Valor promedio de venta neta por pedido efectivo - AOV (.35).
+	measure 'Ticket Promedio' = DIVIDE([Venta Neta], [Pedidos Efectivos], BLANK())
+		formatString: $#,##0.00
+		displayFolder: 01 KPIs Principales
+		lineageTag: c9a739e7-3cac-4dbc-9c4e-97f3d8896b9e
+
+	/// Total de unidades vendidas en pedidos efectivos (2,038 unidades).
+	measure 'Unidades Vendidas' = CALCULATE(SUM(stg_order_items[quantity]), KEEPFILTERS(fct_orders[status] IN {"completed", "processing", "shipped"}))
+		formatString: #,##0
+		displayFolder: 01 KPIs Principales
+		lineageTag: 044d9ff3-08c1-4dd2-a0cc-3b505e21b5cd
+
+	/// Promedio de unidades por pedido efectivo (2.29).
+	measure 'Unidades por Pedido' = DIVIDE([Unidades Vendidas], [Pedidos Efectivos], BLANK())
+		formatString: #,##0.00
+		displayFolder: 01 KPIs Principales
+		lineageTag: f0fcba39-03ae-4858-9378-93aaeb20b376
+
+	/// Total global de órdenes registradas en todos los estados (1,000 órdenes).
+	measure 'Pedidos Totales' = DISTINCTCOUNT(stg_order_items[order_id])
+		formatString: #,##0
+		displayFolder: 02 Control Operativo y Descuentos
+		lineageTag: a33df8aa-5bfe-47af-b64b-2f071359d91b
+
+	/// Monto neto total de todas las órdenes registradas (,968.35).
+	measure 'Venta Global Registrada' = SUM(stg_order_items[item_net_amount])
+		formatString: $#,##0.00
+		displayFolder: 02 Control Operativo y Descuentos
+		lineageTag: b0ddb66e-a314-4818-bd61-c70f9f42eff9
+
+	/// Ingresos netos en tránsito o preparación pendientes de cierre contable ($18,198.85).
+	measure 'Venta en Pipeline' = CALCULATE(SUM(stg_order_items[item_net_amount]), KEEPFILTERS(fct_orders[status] IN {"processing", "shipped"}))
+		formatString: $#,##0.00
+		displayFolder: 02 Pipeline Operativo y Fricción
+		lineageTag: 5ddf0ccb-eceb-4bcb-921d-863702f4b9d9
+
+	/// Cantidad de órdenes activas en proceso o enviadas (118 órdenes).
+	measure 'Pedidos en Pipeline' = CALCULATE(DISTINCTCOUNT(stg_order_items[order_id]), KEEPFILTERS(fct_orders[status] IN {"processing", "shipped"}))
+		formatString: #,##0
+		displayFolder: 02 Pipeline Operativo y Fricción
+		lineageTag: fef31ddf-8def-4f32-91f2-96204881c709
+
+	/// Suma de Venta Neta completada más Venta en Pipeline activa ($133,663.86).
+	measure 'Venta Operativa Activa' = [Venta Neta] + [Venta en Pipeline]
+		formatString: $#,##0.00
+		displayFolder: 02 Pipeline Operativo y Fricción
+		lineageTag: ad7da7c0-279b-4dfe-a865-599092ccc2d1
+
+	/// Descuentos promocionales aplicados en pedidos efectivos (,735.14).
+	measure 'Descuentos Otorgados' = CALCULATE(SUM(stg_order_items[discount_amount]), KEEPFILTERS(fct_orders[status] IN {"completed", "processing", "shipped"}))
+		formatString: $#,##0.00
+		displayFolder: 02 Control Operativo y Descuentos
+		lineageTag: 38c391c2-de1e-4c38-b1cd-f6a4c753a60e
+
+	/// Porcentaje de descuento sobre el ingreso bruto efectivo (6.13%).
+	measure '% Tasa de Descuento' = DIVIDE([Descuentos Otorgados], [Ingreso Bruto], BLANK())
+		formatString: 0.00%
+		displayFolder: 02 Control Operativo y Descuentos
+		lineageTag: abe4b0f7-934c-4ddb-9074-e3a7c112bfd1
+
+	/// Ingresos netos revertidos por devoluciones de clientes ($12,981.29).
+	measure 'Importe Devoluciones' = CALCULATE(SUM(stg_order_items[item_net_amount]), KEEPFILTERS(fct_orders[status] = "returned"))
+		formatString: $#,##0.00
+		displayFolder: 02 Pipeline Operativo y Fricción
+		lineageTag: 35b03033-239a-4404-b633-ecb3ab1683b6
+
+	/// Órdenes únicas devueltas por clientes (74 órdenes).
+	measure 'Pedidos Devueltos' = CALCULATE(DISTINCTCOUNT(stg_order_items[order_id]), KEEPFILTERS(fct_orders[status] = "returned"))
+		formatString: #,##0
+		displayFolder: 02 Pipeline Operativo y Fricción
+		lineageTag: 32bb04b5-6888-43b6-a62c-8614ccd4ca2d
+
+	/// Proporción de pedidos devueltos sobre el total de pedidos (7.40%).
+	measure '% Tasa de Devolución' = DIVIDE([Pedidos Devueltos], [Pedidos Totales], 0)
+		formatString: 0.00%
+		displayFolder: 02 Pipeline Operativo y Fricción
+		lineageTag: 2b0a860b-dc5c-4599-b2ff-4b82e6b454a3
+
+	/// Ingresos no concretados por órdenes canceladas ($5,323.20).
+	measure 'Importe Cancelaciones' = CALCULATE(SUM(stg_order_items[item_net_amount]), KEEPFILTERS(fct_orders[status] = "cancelled"))
+		formatString: $#,##0.00
+		displayFolder: 02 Pipeline Operativo y Fricción
+		lineageTag: 44d65aff-d033-441f-83e8-940f5b65e815
+
+	/// Órdenes únicas canceladas (37 órdenes).
+	measure 'Pedidos Cancelados' = CALCULATE(DISTINCTCOUNT(stg_order_items[order_id]), KEEPFILTERS(fct_orders[status] = "cancelled"))
+		formatString: #,##0
+		displayFolder: 02 Pipeline Operativo y Fricción
+		lineageTag: c11ac79c-5be3-44c3-96eb-cedc5eac6e8d
+
+	/// Proporción de pedidos cancelados sobre el total de pedidos (3.70%).
+	measure '% Tasa de Cancelación' = DIVIDE([Pedidos Cancelados], [Pedidos Totales], 0)
+		formatString: 0.00%
+		displayFolder: 02 Pipeline Operativo y Fricción
+		lineageTag: 1949126c-9a5e-435d-873f-9065b493b780
+
+	/// Cantidad de líneas de pedido completadas cuyo descuento perforó el costo unitario del producto (3 casos).
+	measure 'Ítems Bajo Costo' = CALCULATE(COUNTROWS(stg_order_items), KEEPFILTERS(stg_order_items[item_net_profit] < 0), KEEPFILTERS(fct_orders[is_completed_order] = TRUE()))
+		formatString: #,##0
+		displayFolder: 02 Pipeline Operativo y Fricción
+		lineageTag: 0c823fa3-cbee-491e-a8d2-b78b78833b56
+
+	/// Total de clientes únicos registrados (200 clientes).
+	measure 'Clientes Registrados' = COUNTROWS(dim_customers)
+		formatString: #,##0
+		displayFolder: 03 Clientes y Segmentación
+		lineageTag: 68f6f0e2-f202-49f1-bf0f-00ffc08908ec
+
+	/// Clientes únicos con compra efectiva en el contexto seleccionado.
+	measure 'Clientes Activos' = CALCULATE(DISTINCTCOUNT(fct_orders[customer_id]), CROSSFILTER(stg_order_items[order_id], fct_orders[order_id], Both), KEEPFILTERS(fct_orders[status] IN {"completed", "processing", "shipped"}))
+		formatString: #,##0
+		displayFolder: 03 Clientes y Segmentación
+		lineageTag: 17438e9f-2f12-464f-897a-28ea3c9501e6
+
+	/// Gasto acumulado promedio por cliente activo.
+	measure 'LTV Promedio' = DIVIDE([Venta Neta], [Clientes Activos], BLANK())
+		formatString: $#,##0.00
+		displayFolder: 03 Clientes y Segmentación
+		lineageTag: 26184605-917e-4d6b-9c5c-db29ec3f2264
+
+	/// Participación de los clientes VIP sobre la facturación neta total (68.61%).
+	measure '% Share VIP' = DIVIDE(CALCULATE([Venta Neta], KEEPFILTERS(dim_customers[customer_segment] = "VIP")), CALCULATE([Venta Neta], ALL(dim_customers)), BLANK())
+		formatString: 0.00%
+		displayFolder: 03 Clientes 360 y CRM
+		lineageTag: 478a9a71-cfb8-4088-97dc-09ba5f8da972
+
+	/// Venta Neta del mes inmediato anterior.
+	measure 'Venta Mes Anterior' = CALCULATE([Venta Neta], DATEADD(Calendario[Fecha], -1, MONTH))
+		formatString: $#,##0.00
+		displayFolder: 04 Inteligencia Temporal
+		lineageTag: 69fc30e0-a16b-4270-9423-250949f46221
+
+	/// Variación absoluta de Venta Neta respecto al mes anterior.
+	measure 'Variación MoM' = IF(NOT ISBLANK([Venta Mes Anterior]) && NOT ISBLANK([Venta Neta]), [Venta Neta] - [Venta Mes Anterior], BLANK())
+		formatString: $#,##0.00
+		displayFolder: 04 Inteligencia Temporal
+		lineageTag: d28068ae-620e-401e-8b79-e64a4190f9a4
+
+	/// Variación porcentual intermensual (Month-over-Month).
+	measure '% Crecimiento MoM' = DIVIDE([Variación MoM], [Venta Mes Anterior], BLANK())
+		formatString: +0.00%;-0.00%;0.00%
+		displayFolder: 04 Inteligencia Temporal
+		lineageTag: efb23d1e-87ba-403a-8135-26dc87136bbb
+
+	/// Venta Neta en el mismo período del año anterior.
+	measure 'Venta Año Anterior' = CALCULATE([Venta Neta], SAMEPERIODLASTYEAR(Calendario[Fecha]))
+		formatString: $#,##0.00
+		displayFolder: 04 Inteligencia Temporal
+		lineageTag: 3a42142b-21a1-4b25-a4db-f939f181ddc5
+
+	/// Variación porcentual interanual (Year-over-Year).
+	measure '% Crecimiento YoY' = DIVIDE([Venta Neta] - [Venta Año Anterior], [Venta Año Anterior], BLANK())
+		formatString: +0.00%;-0.00%;0.00%
+		displayFolder: 04 Inteligencia Temporal
+		lineageTag: e7b413ac-6ff6-4c70-b90e-ff5be9858e93
+
+	/// Venta Neta acumulada en el año hasta la fecha (Year-To-Date).
+	measure 'Venta YTD' = TOTALYTD([Venta Neta], Calendario[Fecha])
+		formatString: $#,##0.00
+		displayFolder: 04 Inteligencia Temporal
+		lineageTag: 322c0210-f342-4713-9013-3105a1e6f0a8
+
+	/// Total de órdenes únicas efectivas (889 pedidos).
+	measure 'Pedidos Efectivos' = CALCULATE(DISTINCTCOUNT(stg_order_items[order_id]), KEEPFILTERS(fct_orders[status] IN {"completed", "processing", "shipped"}))
+		formatString: #,##0
+		displayFolder: 01 KPIs Principales
+		lineageTag: f50634a5-12ff-4497-b24a-900c1b41c76e
+
+	column order_id
+		dataType: int64
+		isKey
+		formatString: 0
+		lineageTag: 7f7bfe42-1a41-4b8d-a498-e2388e459df9
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 36f06917-e817-4862-b666-a63c9b75a3d1
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 645e9805-b23e-403f-8ce5-bfb26583fd89
+		summarizeBy: none
+		sourceColumn: order_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column order_year
+		dataType: int64
+		formatString: 0
+		lineageTag: d31bcee9-2793-44d3-b4bb-f59b9e5692a8
+		summarizeBy: sum
+		sourceColumn: order_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_month
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d30040d-cd6a-4335-a233-64c27d4cdefa
+		summarizeBy: sum
+		sourceColumn: order_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_year_month
+		dataType: string
+		lineageTag: 63ade07b-a601-4fde-ba51-ad67c4b860c5
+		summarizeBy: none
+		sourceColumn: order_year_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 80c5e7d1-ea98-4b11-9ced-5d4456d5d241
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column channel
+		dataType: string
+		lineageTag: 936ee52d-b9fd-4004-afb7-7e3d84b1aaba
+		summarizeBy: none
+		sourceColumn: channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_items_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 7dbb1eea-a19d-472d-ae7c-3f8247203cfb
+		summarizeBy: sum
+		sourceColumn: total_items_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_units_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 96a41ae3-a6bd-44a6-b945-47cf832bb27c
+		summarizeBy: sum
+		sourceColumn: total_units_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column gross_amount
+		dataType: double
+		lineageTag: 57176b8f-ae11-4cb7-9c0d-bf6b721668ee
+		summarizeBy: sum
+		sourceColumn: gross_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_discount_amount
+		dataType: double
+		lineageTag: 3cd35254-b960-473b-8783-ca44e2fe3a8d
+		summarizeBy: sum
+		sourceColumn: total_discount_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column net_amount
+		dataType: double
+		lineageTag: 2d8aaeac-7894-40a6-a7ca-c847c3e004eb
+		summarizeBy: sum
+		sourceColumn: net_amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column is_completed_order
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1e97adea-0d14-4ccd-b2e8-b549b37c2c6a
+		summarizeBy: none
+		sourceColumn: is_completed_order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fct_orders = m
+		mode: import
+		source =
+				let
+				  Origen = GoogleBigQuery.Database([BillingProject = null, UseStorageApi = null, ConnectionTimeout = null, CommandTimeout = null]),
+				  #"Navegación 1" = Origen{[Name = "dbt-retail-analytics"]}[Data],
+				  #"Navegación 2" = #"Navegación 1"{[Name = "dbt_dev", Kind = "Schema"]}[Data],
+				  #"Navegación 3" = #"Navegación 2"{[Name = "fct_orders", Kind = "Table"]}[Data]
+				in
+				  #"Navegación 3"
+

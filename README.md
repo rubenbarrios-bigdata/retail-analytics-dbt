@@ -1,74 +1,57 @@
-# Retail Analytics: Preparación y Modelado de Datos para Power BI/Data Studio con dbt y Google BigQuery
+# Retail Analytics End-to-End: Modelado con dbt + Google BigQuery y Dashboard Ejecutivo en Power BI (DAX)
 
 [![dbt-core](https://img.shields.io/badge/dbt--core-v1.12.5-orange?logo=dbt)](https://www.getdbt.com/)
 [![Google BigQuery](https://img.shields.io/badge/Google_Cloud-BigQuery-blue?logo=googlecloud)](https://cloud.google.com/bigquery)
+[![Power BI](https://img.shields.io/badge/Power_BI-Dashboard_%26_PBIP-F2C811?logo=powerbi&logoColor=black)](#dashboard-ejecutivo-en-power-bi-conectado-a-google-bigquery)
+[![DAX](https://img.shields.io/badge/Modelado-Star_Schema_%7C_DAX-00B4D8)](docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md)
 [![Tests Passing](https://img.shields.io/badge/Calidad_de_Datos-28%2F28%20tests%20pasados-brightgreen)](https://docs.getdbt.com/docs/build/data-tests)
 [![SQL](https://img.shields.io/badge/Language-SQL-informational)](https://cloud.google.com/bigquery/docs/reference/standard-sql/en-US)
 [![Rol](https://img.shields.io/badge/Perfil-Analista%20de%20Datos%20%7C%20BI-green)](#contexto-del-proyecto-y-rol-del-analista)
+
+![Dashboard Ejecutivo Retail & E-Commerce en Power BI](assets/dashboard_powerbi_bigquery.png)
 
 ---
 
 ## 📌 Contexto del Proyecto y Rol del Analista
 
-En las empresas de comercio minorista (*Retail & E-commerce*), los datos de ventas, clientes y productos suelen llegar a la base de datos (BigQuery) con formatos desordenados, valores nulos, fechas en formatos de texto y sin las métricas clave que la gerencia necesita ver en sus reportes diarios.
+En las empresas de comercio minorista (*Retail & E-commerce*), los datos de ventas, clientes y productos suelen llegar a la base de datos con formatos desordenados, valores nulos, fechas en texto y sin las métricas estandarizadas que la gerencia necesita para tomar decisiones.
 
-Como **Analista de Datos**, en lugar de intentar limpiar millones de filas en hojas de cálculo o sobrecargar Power Query con transformaciones lentas, utilicé **dbt Core** para:
-1. **Limpiar y estandarizar los datos crudos** directamente dentro de BigQuery usando SQL.
-2. **Construir tablas analíticas consolidadas** con las métricas comerciales ya calculadas (Ventas netas, márgenes de ganancia, ticket promedio y segmentación de clientes).
-3. **Validar la calidad de los datos** con pruebas automáticas para asegurar que ningún gráfico en Power BI / Data Studio muestre datos erróneos o incompletos.
+Como **Analista de Datos**, construí una solución analítica integral de punta a punta combinando **dbt Core**, **Google BigQuery** y **Power BI**:
+1. **Limpieza y estandarización SQL en la nube:** Transformación de datos crudos directamente en **Google BigQuery** mediante **dbt Core** (`Staging` $\rightarrow$ `Marts`).
+2. **Aseguramiento de calidad de datos:** Ejecución de **28 pruebas automáticas (`dbt test`)** para garantizar cero duplicados, cero nulos críticos e integridad referencial antes de conectar la capa de visualización.
+3. **Modelado en Estrella, DAX y Visualización Ejecutiva:** Conexión directa de **Power BI** a BigQuery, construyendo dimensiones calculadas y un catálogo de medidas **DAX** enfocado en rentabilidad comercial, segmentación de clientes y desempeño operativo.
 
 ---
 
 ## 🎯 Preguntas de Negocio que responde este Proyecto
 
-Este modelo de datos fue diseñado para que el equipo comercial y de marketing pueda responder rápidamente en Power BI / Data Studio preguntas como:
-
-* **Rendimiento de Ventas:** ¿Cuánto vendemos en bruto vs. cuánto descontamos en promociones? ¿Cuál es la facturación neta mensual?
-* **Comportamiento de Clientes:** ¿Quiénes son nuestros clientes más valiosos (*VIP*)? ¿Qué porcentaje de clientes registrados aún no realiza su primera compra (*Prospects*)?
-* **Rentabilidad de Productos:** ¿Cuáles artículos tienen el mejor margen de ganancia y cuáles representan el mayor volumen de unidades vendidas?
-* **Efectividad de Canales:** ¿Por qué canal se concentran las mayores ventas: sitio web, aplicación móvil o tiendas físicas?
+* **Rendimiento Financiero:** ¿Cuál es la Venta Neta efectiva, la Utilidad Neta real tras costos y el Margen Comercial mensual?
+* **Concentración de Clientes:** ¿Cuánto representan los clientes más valiosos (*VIP*) frente a los segmentos *Frecuente* y *Activo*?
+* **Rentabilidad de Catálogo:** ¿Qué categorías (*Electrónica*, *Muebles*, *Indumentaria*, *Accesorios*) lideran la facturación y ganancia neta?
+* **Salud Operativa y Mercados:** ¿Qué proporción de pedidos se completa con éxito frente a devoluciones y cancelaciones, y qué países lideran las ventas regionales?
 
 ---
 
-## 📂 Origen y Fuente de los Datos (Data Source)
-
-Los datos crudos de este proyecto corresponden a un **dataset simulado de comercio minorista (*Retail & E-commerce Mock Data*)**, estructurado para emular la base de datos operacional de una empresa omnicanal (*Web*, *App móvil*, *Tienda física*) siguiendo el modelo relacional estándar del sector comercial (clientes, catálogo de productos y órdenes con estructura cabecera-detalle).
-
-* **Propósito del Dataset:** Brindar un conjunto de datos controlado, realista y 100% reproducible que permita simular el ciclo analítico corporativo completo (ingesta, estandarización en staging, modelado dimensional y testing de calidad) sin exponer información confidencial de clientes reales (cumplimiento estricto de privacidad sin PII).
-* **Ubicación en el repositorio:**
-  * [`data/`](data/): Archivos crudos de origen en formato CSV, incluyendo el registro transaccional consolidado ([`raw_retail_transactions.csv`](data/raw_retail_transactions.csv)).
-  * [`seeds/`](seeds/): Las 4 tablas crudas preparadas para su ingesta y versionado en dbt.
-* **Carga en el Data Warehouse:** Se cargan automáticamente en Google BigQuery mediante el comando `dbt seed`.
-* **Seguridad y Privacidad:** Datos sintéticos con correos bajo dominio de prueba `@example.com`.
-* **Estructura de las tablas crudas:**
-  * `raw_customers` (200 filas): Maestro de clientes, ubicación geográfica y fecha de registro.
-  * `raw_products` (36 filas): Catálogo comercial con costos y precios de venta sugeridos.
-  * `raw_orders` (1,000 filas): Encabezado de órdenes de compra con canal y estado del pedido.
-  * `raw_order_items` (1,794 filas): Detalle de ítems por orden, cantidades y descuentos.
-
----
-
-## 🔄 Flujo de Trabajo del Analista
-
-El flujo sigue las mejores prácticas de la analítica moderna:
+## 🔄 Flujo de Trabajo End-to-End del Analista
 
 ```mermaid
 graph LR
-    subgraph S1 ["1. Datos Crudos en BigQuery"]
-        A[("Clientes")]
-        B[("Productos")]
-        C[("Órdenes")]
-        D[("Detalle de Órdenes")]
+    subgraph S1 ["1. Almacén de Datos (BigQuery)"]
+        A[("raw_customers")]
+        B[("raw_products")]
+        C[("raw_orders")]
+        D[("raw_order_items")]
     end
 
-    subgraph S2 ["2. Modelado con dbt"]
-        E["Vistas de Limpieza (Staging)"]
-        F["Tablas Analíticas (Marts)"]
+    subgraph S2 ["2. Modelado SQL con dbt Core"]
+        E["Limpieza y Tipado (Staging)"]
+        F["Tablas Dimensionales (Marts)"]
         G{"Control de Calidad (28 Tests)"}
     end
 
-    subgraph S3 ["3. Reportes"]
-        H["Power BI / Data Studio"]
+    subgraph S3 ["3. Business Intelligence (Power BI)"]
+        H["Esquema en Estrella + Medidas DAX"]
+        I["Dashboard Ejecutivo Interactivo"]
     end
 
     A --> E
@@ -79,57 +62,64 @@ graph LR
     E --> F
     F --> G
     G --> H
+    H --> I
 ```
 
 ---
 
-## 📊 Tablas Analíticas Creadas para los Reportes
+## 📊 Dashboard Ejecutivo en Power BI (Conectado a Google BigQuery)
 
-El proyecto organiza los datos en tablas limpias y listas para conectar directamente con Power BI / Data Studio:
+En la segunda fase del proyecto se desarrolló un informe ejecutivo en formato de control de versiones **Power BI Project (`.pbip` / `TMDL`)**, disponible en la carpeta [`powerbi/`](powerbi/), conectado directamente al dataset `dbt_dev` en **Google BigQuery**:
 
-### 1. `fct_orders` (Resumen de Órdenes de Venta)
-* **Objetivo:** Permite analizar las ventas a nivel de cada pedido.
-* **Métricas calculadas:** Unidades totales por orden, monto de lista (`gross_amount`), descuentos otorgados (`total_discount_amount`), venta neta final (`net_amount`) y estado del pedido (`completed`, `returned`, `cancelled`).
+![Dataset y Esquema en Google BigQuery](assets/bigquery_dataset_schema.png)
 
-### 2. `dim_customers` (Vista 360 del Cliente)
-* **Objetivo:** Permite a marketing segmentar clientes y entender su fidelidad.
-* **Métricas calculadas:**
-  * Fecha de primer y último pedido.
-  * Total de órdenes realizadas y órdenes exitosas.
-  * **Customer Lifetime Value (LTV):** Gasto total acumulado por el cliente.
-  * **Ticket Promedio (AOV):** Monto promedio por compra completada.
-  * **Segmento del Cliente:**
-    * 🌟 **VIP:** Clientes con gasto acumulado $\ge \$600$.
-    * 🔁 **Frequent:** Clientes con 3 o más compras.
-    * 👤 **Active:** Clientes con 1 o 2 compras.
-    * 🎯 **Prospect:** Usuarios registrados sin compras efectivas.
+### Indicadores Clave Consolidados (DAX)
+| KPI Ejecutivo | Valor Consolidado | Detalle Analítico |
+| :--- | :---: | :--- |
+| **Venta Neta** | `$133,663.86` | Ingresos netos de pedidos efectivos (*Completados*, *En Proceso* y *Enviados*). |
+| **Utilidad Neta** | `$67,466.36` | Ganancia comercial neta descontando promociones y costo unitario (`COGS`). |
+| **% Margen Neto** | `50.47%` | Rentabilidad sostenida por encima del `50%` en los 9 mercados. |
+| **Ticket Promedio** | `$150.35` | Valor medio por orden efectiva (`AOV`). |
+| **Pedidos Efectivos** | `889` | `88.9%` de conversión efectiva sobre `1,000` órdenes totales. |
+| **Unidades Vendidas** | `2,034` | Volumen físico despachado (`~2.29` unidades promedio por pedido). |
 
-### 3. `dim_products` (Catálogo y Rentabilidad Comercial)
-* **Objetivo:** Ayuda a compras y finanzas a medir qué productos son rentables.
-* **Métricas calculadas:** Unidades totales vendidas, ingresos brutos, ingresos netos reales, porcentaje de margen comercial y **ganancia total estimada**.
+### Principales Insights del Análisis
+* **Liderazgo por Categoría:** **Electrónica** (`~$65 mil` ventas | `~$32 mil` utilidad) y **Muebles** (`~$37 mil` ventas | `~$18 mil` utilidad) concentran más del `75%` de la rentabilidad del catálogo.
+* **Concentración por Segmento:** El segmento **VIP** (`97` clientes) genera **`$99,481.20`** (`74.4%` de las ventas netas) con un ticket promedio de `$182.53`, seguido por **Frecuente** (`~$27 mil`) y **Activo** (`~$7 mil`).
+* **Control Operativo:** Frente a los pedidos efectivos (*Completado* `~$115 mil`, *En Proceso* `~$10 mil` y *Enviado* `~$8 mil`), se cuantifican **`~$13 mil` en Devoluciones (`7.4%`)** y **`~$5 mil` en Cancelaciones (`3.7%`)**, identificando el principal foco de mejora post-venta.
+* **Desempeño por País:** **México** lidera en cantidad de pedidos efectivos (`163`) y clientes activos (`40`), mientras que **Argentina** lidera en facturación neta (`$24,808.31`) y utilidad (`$12,408.81`), seguidos por **Colombia** y **Chile**.
 
----
-
-## 🛡️ Control de Calidad: ¿Por qué usamos `dbt test`?
-
-Uno de los errores más comunes de un analista novato es conectar Power BI directamente a datos crudos y que el reporte falle en plena presentación ejecutiva por culpa de datos rotos.
-
-Para evitar eso, definí **28 pruebas automáticas** que se ejecutan en BigQuery antes de que los datos toquen Power BI:
-
-* **Sin duplicados (`unique`):** Verificamos que ningún cliente ni orden esté duplicado.
-* **Sin campos vacíos (`not_null`):** Garantizamos que las ventas, fechas y claves primarias nunca vengan vacías.
-* **Integridad entre tablas (`relationships`):** Aseguramos que cada producto y cliente en una orden exista realmente en el catálogo maestro.
-* **Valores de negocio válidos (`accepted_values`):** Comprobamos que los estados de pedidos solo correspondan a los permitidos por el negocio (`completed`, `shipped`, `returned`, `cancelled`, `processing`).
+👉 **[Ver el Análisis Ejecutivo Completo, Diagrama Estrella y Catálogo de Fórmulas DAX aquí (`docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md`)](docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md)**
 
 ---
 
-## 📈 Conexión con Herramientas de BI (Power BI / Data Studio)
+## 📂 Estructura del Repositorio
 
-Al conectar con **Power BI** o **Data Studio (Looker Studio)**:
-1. Conectar mediante el conector nativo de **Google BigQuery**.
-2. Seleccionar el dataset `dbt_dev` y marcar las 3 tablas preparadas: `dim_customers`, `dim_products` y `fct_orders`.
-3. Relacionar mediante `customer_id` y `product_id`.
-4. Como las métricas clave ya están precalculadas en dbt, los modelos y dashboards quedan livianos, rápidos y sin necesidad de fórmulas DAX excesivas.
+* [`models/staging/`](models/staging/): Vistas SQL de limpieza, estandarización de tipos de datos y deduplicación en BigQuery (`stg_customers`, `stg_products`, `stg_orders`, `stg_order_items`).
+* [`models/marts/`](models/marts/): Tablas analíticas dimensionales y de hechos (`fct_orders`, `dim_customers`, `dim_products`) junto a sus pruebas de calidad en [`schema.yml`](models/marts/schema.yml).
+* [`analyses/`](analyses/): Consultas SQL de perfilado estadístico y exploración analítica (`profile_dim_customers.sql`).
+* [`seeds/`](seeds/) y [`data/`](data/): Dataset simulado reproducible (*Retail & E-commerce Mock Data*, libre de PII con dominios `@example.com`).
+* [`powerbi/`](powerbi/): Proyecto completo de Power BI en formato versionable (`.pbip`), incluyendo el **Modelo Semántico en `TMDL`** (tablas, relaciones y medidas DAX) y la definición visual del reporte con tema personalizado oscuro (`Retail_Executive_Dark.json`).
+* [`docs/`](docs/): Documentación ejecutiva del análisis comercial, arquitectura en estrella y diccionario DAX.
+* [`assets/`](assets/): Capturas del Dashboard en Power BI y del almacén de datos en Google BigQuery.
+
+---
+
+## 🗄️ Tablas Analíticas Modeladas en dbt (`dbt_dev`)
+
+1. **`fct_orders` (Tabla de Hechos de Órdenes):** Consolida a nivel de pedido las unidades, monto bruto (`gross_amount`), descuentos (`total_discount_amount`), venta neta (`net_amount`), canal, estado e indicador de orden efectiva (`is_completed_order`).
+2. **`dim_customers` (Dimensión 360 del Cliente):** Historial de primera y última compra, órdenes acumuladas, **Customer Lifetime Value (`lifetime_spend`)**, **Ticket Promedio (`average_order_value`)** y segmentación comercial (*VIP*, *Frequent*, *Active*).
+3. **`dim_products` (Catálogo y Rentabilidad Comercial):** Precios de costo y lista, margen unitario, unidades efectivas vendidas, ingresos netos acumulados y ganancia estimada por producto.
+
+---
+
+## 🛡️ Control de Calidad Automatizado (`dbt test`)
+
+Se ejecutan **28 pruebas automáticas** en BigQuery para blindar la integridad de los reportes:
+* **Unicidad (`unique`):** Garantiza cero duplicados en claves primarias de clientes, productos y órdenes.
+* **Completitud (`not_null`):** Verifica que importes, fechas e identificadores críticos nunca estén vacíos.
+* **Integridad Referencial (`relationships`):** Comprueba que todo cliente y producto transaccionado exista en sus respectivas dimensiones maestras.
+* **Reglas de Dominio (`accepted_values`):** Valida estados operativos (`completed`, `shipped`, `processing`, `returned`, `cancelled`) y segmentos comerciales válidos.
 
 ---
 
@@ -148,33 +138,23 @@ Al conectar con **Power BI** o **Data Studio (Looker Studio)**:
    pip install dbt-core dbt-bigquery
    ```
 
-3. **Configurar credenciales:**
-   Configurar el archivo `profiles.yml` en la carpeta `~/.dbt/` apuntando a tu proyecto de Google Cloud BigQuery.
+3. **Configurar credenciales de Google BigQuery:**
+   Configurar `profiles.yml` en `~/.dbt/` apuntando a tu proyecto de Google Cloud.
 
-4. **Ejecutar el modelado en dbt:**
+4. **Ejecutar el flujo dbt en BigQuery:**
    ```powershell
-   # 1. Comprobar conexión
    dbt debug
-
-   # 2. Cargar datos de prueba (1,000 órdenes y 200 clientes)
    dbt seed
-
-   # 3. Limpiar y modelar los datos
    dbt run
-
-   # 4. Correr las pruebas de calidad
    dbt test
-
-   # 5. Ver la documentación interactiva en el navegador
-   dbt docs generate
-   dbt docs serve
    ```
+
+5. **Abrir el proyecto de Power BI:**
+   Abrir [`powerbi/Dashboard dbt-BigQuery Retail Analytics.pbip`](powerbi/) en **Power BI Desktop** para explorar el Modelo en Estrella, el catálogo DAX y el Dashboard conectado a BigQuery.
 
 ---
 
 ## 👨‍💻 Autor
 
-**Rubén Barrios**
-
-Proyecto realizado como práctica de modelado de datos con dbt y BigQuery, orientado a seguir consolidando el desarrollo profesional en el área de Data Analytics.
-
+**Rubén Barrios**  
+*Analista de Datos | Business Intelligence (SQL · dbt · Google BigQuery · Power BI · DAX)*

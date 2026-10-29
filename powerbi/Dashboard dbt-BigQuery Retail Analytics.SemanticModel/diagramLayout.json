@@ -1,0 +1,113 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 60,
+            "y": 40
+          },
+          "nodeIndex": "Calendario",
+          "nodeLineageTag": "ff7cd4c5-8c46-4c31-8e5c-f548630bbe59",
+          "size": {
+            "height": 260,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 60,
+            "y": 330
+          },
+          "nodeIndex": "dim_customers",
+          "nodeLineageTag": "bf12c48c-e71e-4890-ad12-74ea024dfea7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 380,
+            "y": 40
+          },
+          "nodeIndex": "Canales",
+          "nodeLineageTag": "29de9e73-ba47-49d9-b0bd-c5e620dab7cf",
+          "size": {
+            "height": 180,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 680,
+            "y": 40
+          },
+          "nodeIndex": "Estados",
+          "nodeLineageTag": "cbc90a5e-ab61-4589-b9f2-f2067ddfa2eb",
+          "size": {
+            "height": 180,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 450,
+            "y": 280
+          },
+          "nodeIndex": "fct_orders",
+          "nodeLineageTag": "b7e4c159-08ef-4bf7-aad3-e324544827ba",
+          "size": {
+            "height": 340,
+            "width": 250
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 820,
+            "y": 280
+          },
+          "nodeIndex": "stg_order_items",
+          "nodeLineageTag": "e94b9fa4-bdd8-49b8-b520-b87861640883",
+          "size": {
+            "height": 300,
+            "width": 250
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1180,
+            "y": 280
+          },
+          "nodeIndex": "dim_products",
+          "nodeLineageTag": "07cfa0a4-97cc-4399-bf25-9d793d2b8532",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 7
+        }
+      ],
+      "name": "Todas las tablas",
+      "zoomValue": 80,
+      "pinKeyFieldsToTop": true,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas las tablas",
+  "defaultDiagram": "Todas las tablas"
+}

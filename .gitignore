@@ -9,17 +9,27 @@ __pycache__/
 # dbt Artifacts & Execution Logs
 target/
 dbt_packages/
+dbt_internal_packages/
 logs/
 
 # Sensitive Credentials & Keys (Crucial for Cloud Security)
-*.json
+/*.json
+*key*.json
+*credentials*.json
+*service-account*.json
 profiles.yml
 .env
 *.key
 *.pem
 
+# Power BI Local Cache & User Settings (PBIP Git Best Practices)
+powerbi/**/.pbi/cache.abf
+powerbi/**/.pbi/localSettings.json
+
 # Personal Notes / Scratch Docs
 *.docx
+GUIA_DBT_BIGQUERY_PASO_A_PASO.*
+/raw_retail_transactions.csv
 
 # System & Editor files
 .DS_Store
