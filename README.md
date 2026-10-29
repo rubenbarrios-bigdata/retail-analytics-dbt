@@ -2,13 +2,15 @@
 
 [![dbt-core](https://img.shields.io/badge/dbt--core-v1.12.5-orange?logo=dbt)](https://www.getdbt.com/)
 [![Google BigQuery](https://img.shields.io/badge/Google_Cloud-BigQuery-blue?logo=googlecloud)](https://cloud.google.com/bigquery)
-[![Power BI](https://img.shields.io/badge/Power_BI-Dashboard_%26_PBIP-F2C811?logo=powerbi&logoColor=black)](#dashboard-ejecutivo-en-power-bi-conectado-a-google-bigquery)
+[![Power BI](https://img.shields.io/badge/Power_BI_Service-Ver_Dashboard_Online-F2C811?logo=powerbi&logoColor=black)](https://app.powerbi.com/groups/me/reports/e711ecc6-2b4d-444a-9065-9f9e82b8cc5f/dc6e54048909792c2769?experience=power-bi)
 [![DAX](https://img.shields.io/badge/Modelado-Star_Schema_%7C_DAX-00B4D8)](docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md)
 [![Tests Passing](https://img.shields.io/badge/Calidad_de_Datos-28%2F28%20tests%20pasados-brightgreen)](https://docs.getdbt.com/docs/build/data-tests)
 [![SQL](https://img.shields.io/badge/Language-SQL-informational)](https://cloud.google.com/bigquery/docs/reference/standard-sql/en-US)
 [![Rol](https://img.shields.io/badge/Perfil-Analista%20de%20Datos%20%7C%20BI-green)](#contexto-del-proyecto-y-rol-del-analista)
 
 ![Dashboard Ejecutivo Retail & E-Commerce en Power BI](assets/dashboard_powerbi_bigquery.png)
+
+> 🔗 **Acceso al Informe en Power BI Service:** [Abrir Dashboard Ejecutivo en Power BI Service](https://app.powerbi.com/groups/me/reports/e711ecc6-2b4d-444a-9065-9f9e82b8cc5f/dc6e54048909792c2769?experience=power-bi)
 
 ---
 
