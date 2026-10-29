@@ -10,7 +10,15 @@ Este documento detalla la segunda etapa del proyecto **Retail Analytics**: la co
 
 ## 1. Arquitectura del Modelo Semántico en Estrella (Power BI)
 
-El modelo semántico consume mediante el conector nativo de **Google BigQuery** las tablas limpias y validadas por **dbt Core**, complementándolas con dimensiones analíticas calculadas en **DAX** para garantizar el filtrado unidireccional (`1:N`) y la inteligencia temporal continua:
+El modelo semántico consume mediante el conector nativo de **Google BigQuery** las tablas limpias y validadas por **dbt Core** (`dbt-retail-analytics.dbt_dev`), complementándolas con dimensiones analíticas calculadas en **DAX** (`Calendario`, `Canales`, `Estados`) dentro del proyecto **Power BI (`.pbip`)** para garantizar el filtrado unidireccional (`1:*`) y la inteligencia temporal continua.
+
+### Origen de Datos en Google BigQuery (`dbt_dev`)
+![Dataset y Vista Previa de fct_orders en Google BigQuery](../assets/bigquery_dataset_preview.png)
+
+### Vista del Modelo Relacional en Estrella en Power BI Desktop
+![Modelo Semántico en Estrella en Power BI](../assets/powerbi_star_schema_model.png)
+
+### Esquema Lógico de Entidades y Relaciones (`TMDL`)
 
 ```mermaid
 erDiagram

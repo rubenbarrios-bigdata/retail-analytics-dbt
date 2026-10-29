@@ -69,11 +69,17 @@ graph LR
 
 ---
 
-## 📊 Dashboard Ejecutivo en Power BI (Conectado a Google BigQuery)
+## 📊 Arquitectura en Google BigQuery y Modelo Semántico en Power BI
 
-En la segunda fase del proyecto se desarrolló un informe ejecutivo en formato de control de versiones **Power BI Project (`.pbip` / `TMDL`)**, disponible en la carpeta [`powerbi/`](powerbi/), conectado directamente al dataset `dbt_dev` en **Google BigQuery**:
+En la segunda fase del proyecto se desarrolló un informe ejecutivo en formato de control de versiones **Power BI Project (`.pbip` / `TMDL`)**, disponible en la carpeta [`powerbi/`](powerbi/), conectado directamente al dataset `dbt_dev` modelado con **dbt Core** en **Google BigQuery**:
 
-![Dataset y Esquema en Google BigQuery](assets/bigquery_dataset_schema.png)
+### 1. Tablas Analíticas y Vista Previa en Google BigQuery (`dbt_dev`)
+![Dataset y Vista Previa de fct_orders en Google BigQuery](assets/bigquery_dataset_preview.png)
+
+### 2. Modelo Semántico en Estrella en Power BI Desktop (`PBIP`)
+Las tablas limpias de BigQuery (`fct_orders`, `stg_order_items`, `dim_customers`, `dim_products`) se integran con dimensiones calculadas en **DAX** (`Calendario`, `Canales`, `Estados`) mediante relaciones unidireccionales (`1:*`) para garantizar integridad analítica e inteligencia de tiempo:
+
+![Modelo Semántico en Estrella en Power BI](assets/powerbi_star_schema_model.png)
 
 ### Indicadores Clave Consolidados (DAX)
 | KPI Ejecutivo | Valor Consolidado | Detalle Analítico |
@@ -103,7 +109,7 @@ En la segunda fase del proyecto se desarrolló un informe ejecutivo en formato d
 * [`seeds/`](seeds/) y [`data/`](data/): Dataset simulado reproducible (*Retail & E-commerce Mock Data*, libre de PII con dominios `@example.com`).
 * [`powerbi/`](powerbi/): Proyecto completo de Power BI en formato versionable (`.pbip`), incluyendo el **Modelo Semántico en `TMDL`** (tablas, relaciones y medidas DAX) y la definición visual del reporte con tema personalizado oscuro (`Retail_Executive_Dark.json`).
 * [`docs/`](docs/): Documentación ejecutiva del análisis comercial, arquitectura en estrella y diccionario DAX.
-* [`assets/`](assets/): Capturas del Dashboard en Power BI y del almacén de datos en Google BigQuery.
+* [`assets/`](assets/): Capturas del Dashboard Ejecutivo, de la vista del Modelo en Estrella en Power BI y de la vista previa de tablas en Google BigQuery.
 
 ---
 
