@@ -3,7 +3,7 @@
 [![dbt-core](https://img.shields.io/badge/dbt--core-v1.12.5-orange?logo=dbt)](https://www.getdbt.com/)
 [![Google BigQuery](https://img.shields.io/badge/Google_Cloud-BigQuery-blue?logo=googlecloud)](https://cloud.google.com/bigquery)
 [![Power BI](https://img.shields.io/badge/Power_BI-Ver_Dashboard_Interactivo-F2C811?logo=powerbi&logoColor=black)](https://app.powerbi.com/view?r=eyJrIjoiZDdhMGMyMzktNmEyMC00Yzg0LWE1MWItZWVlY2U1YWUwMWNjIiwidCI6IjgxY2NjYzQzLWI1NjEtNDFmNy05NDgwLWU5ZThmMDI3YzQ0MyIsImMiOjR9)
-[![Power BI DevOps](https://github.com/rubenbarrios-bigdata/retail-analytics-dbt/actions/workflows/bi_devops_ci.yml/badge.svg)](https://github.com/rubenbarrios-bigdata/retail-analytics-dbt/actions/workflows/bi_devops_ci.yml)
+[![PBIP](https://img.shields.io/badge/Control_de_Versiones-PBIP_%7C_Git-F05032?logo=git&logoColor=white)](#control-de-versiones-en-power-bi-pbip--gitgithub)
 [![DAX](https://img.shields.io/badge/Modelado-Star_Schema_%7C_DAX-00B4D8)](docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md)
 [![Tests Passing](https://img.shields.io/badge/Calidad_de_Datos-28%2F28%20tests%20pasados-brightgreen)](https://docs.getdbt.com/docs/build/data-tests)
 [![Informe PDF](https://img.shields.io/badge/Documentación-Informe_End--to--End_PDF-EC1C24?logo=adobeacrobatreader&logoColor=white)](docs/INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf)
@@ -104,14 +104,13 @@ Las tablas limpias de BigQuery (`fct_orders`, `stg_order_items`, `dim_customers`
 
 ---
 
-## ⚙️ Power BI DevOps: PBIP, Git/GitHub, CI/CD y Microsoft Fabric
+## 🗂️ Control de Versiones en Power BI: PBIP + Git/GitHub
 
-En lugar de almacenar el proyecto en un archivo binario cerrado (`.pbix`), se implementó una arquitectura moderna de **BI-as-Code / Power BI DevOps** que permite auditar cambios línea por línea y automatizar validaciones:
+En lugar de almacenar el reporte en un archivo binario cerrado (`.pbix`), se trabajó con buenas prácticas modernas de control de versiones para analítica y Business Intelligence:
 
-* **1. Formato `PBIP` (`TMDL` + `PBIR`):** Desacople completo del **Modelo Semántico** en código declarativo `TMDL` (`model.tmdl`, `relationships.tmdl`, `tables/*.tmdl`) y de la **capa visual del reporte** en JSON estructurado (`PBIR` + tema oscuro corporativo `Retail_Executive_Dark.json`).
-* **2. Control de Versiones en `Git / GitHub`:** Versionado conjunto de los modelos SQL de **dbt Core** y del proyecto **Power BI**, protegido mediante reglas en [`.gitignore`](.gitignore) que excluyen cachés locales (`cache.abf`, `localSettings.json`) y credenciales en la nube.
-* **3. Integración Continua (`CI/CD` con GitHub Actions):** El workflow automático [`.github/workflows/bi_devops_ci.yml`](.github/workflows/bi_devops_ci.yml) ejecuta [`scripts/validate_bi_devops.py`](scripts/validate_bi_devops.py) en cada `push` y `pull_request`, verificando la estructura de `dbt`, las 28 pruebas YAML, la sintaxis JSON de `PBIR`, las relaciones `TMDL` y el catálogo `DAX`.
-* **4. Ecosistema `Microsoft Fabric` (`Fabric Git Integration` & `Power BI Service`):** Mientras **Google BigQuery** actúa como *Cloud Data Warehouse*, tanto el modelo semántico como el reporte incluyen los manifiestos oficiales [`.platform`](powerbi/Dashboard%20dbt-BigQuery%20Retail%20Analytics.SemanticModel/.platform) bajo el esquema `fabric/gitIntegration/platformProperties/2.0.0` (`logicalId` persistentes), habilitando sincronización nativa con *Workspaces* de **Microsoft Fabric** y publicación interactiva en **Power BI Service**.
+* **1. Formato `PBIP` (`TMDL` + `PBIR`):** Proyecto guardado como **Power BI Project (`.pbip`)**, desacoplando el **Modelo Semántico** en código legible `TMDL` (`model.tmdl`, `relationships.tmdl`, `tables/*.tmdl` con las medidas `DAX`) y la **definición visual del reporte** en archivos estructurados JSON junto al tema personalizado `Retail_Executive_Dark.json`.
+* **2. Versionado con `Git` y `GitHub`:** Gestión unificada en un mismo repositorio de las transformaciones SQL de **dbt Core** y del modelo/reporte de **Power BI**, configurando [`.gitignore`](.gitignore) para excluir cachés pesadas locales (`cache.abf`, `localSettings.json`) y credenciales sensibles de Google Cloud.
+* **3. Publicación en `Power BI Service`:** Despliegue del informe interactivo en la web de Power BI para acceso y exploración ejecutiva en vivo.
 
 ---
 
@@ -121,8 +120,7 @@ En lugar de almacenar el proyecto en un archivo binario cerrado (`.pbix`), se im
 * [`models/marts/`](models/marts/): Tablas analíticas dimensionales y de hechos (`fct_orders`, `dim_customers`, `dim_products`) junto a sus pruebas de calidad en [`schema.yml`](models/marts/schema.yml).
 * [`analyses/`](analyses/): Consultas SQL de perfilado estadístico y exploración analítica (`profile_dim_customers.sql`).
 * [`seeds/`](seeds/) y [`data/`](data/): Dataset simulado reproducible (*Retail & E-commerce Mock Data*, libre de PII con dominios `@example.com`).
-* [`powerbi/`](powerbi/): Proyecto completo de Power BI en formato versionable (`.pbip`), incluyendo el **Modelo Semántico en `TMDL`**, manifiestos `.platform` de **Microsoft Fabric Git Integration** y la definición visual `PBIR` (`Retail_Executive_Dark.json`).
-* [`.github/workflows/`](.github/workflows/) y [`scripts/`](scripts/): Pipeline automatizado de **CI/CD en GitHub Actions** (`bi_devops_ci.yml` + `validate_bi_devops.py`).
+* [`powerbi/`](powerbi/): Proyecto completo de Power BI en formato versionable (`.pbip`), incluyendo el **Modelo Semántico en `TMDL`** (tablas, relaciones y medidas DAX) y la definición visual del reporte con tema personalizado oscuro (`Retail_Executive_Dark.json`).
 * [`docs/`](docs/): Documentación ejecutiva ([`ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md`](docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md)) e **Informe Completo End-to-End en PDF** ([`INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf`](docs/INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf)).
 * [`assets/`](assets/): Capturas del Dashboard Ejecutivo, de la vista del Modelo en Estrella en Power BI y de la vista previa de tablas en Google BigQuery.
 
@@ -180,4 +178,4 @@ Se ejecutan **28 pruebas automáticas** en BigQuery para blindar la integridad d
 ## 👨‍💻 Autor
 
 **Rubén Barrios**  
-*Analista de Datos | Business Intelligence (SQL · dbt · Google BigQuery · Power BI · DAX · Power BI DevOps: PBIP, Git/GitHub, CI/CD & Fabric Git Integration)*
+*Analista de Datos | Business Intelligence (SQL · dbt · Google BigQuery · Power BI · DAX · PBIP · Git/GitHub)*

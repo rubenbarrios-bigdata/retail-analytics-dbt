@@ -215,11 +215,10 @@ Venta YTD = TOTALYTD([Venta Neta], Calendario[Fecha])
 
 ---
 
-## 5. Power BI DevOps: `PBIP`, `Git/GitHub`, `CI/CD` y `Microsoft Fabric`
+## 5. Control de Versiones en Power BI: `PBIP`, `TMDL` y `Git/GitHub`
 
-El desarrollo del proyecto se gestiona íntegramente bajo estándares de **BI-as-Code**:
-* **Formato `PBIP` (`TMDL` + `PBIR`):** Modelo semántico legible en texto (`model.tmdl`, `relationships.tmdl`, `tables/*.tmdl`) y visuales JSON (`PBIR`).
-* **Control de Versiones (`Git/GitHub`):** Trazabilidad unificada de `dbt` + `Power BI`, excluyendo archivos binarios locales (`cache.abf`, `localSettings.json`) y credenciales mediante [`.gitignore`](../.gitignore).
-* **Integración Continua (`CI/CD` en GitHub Actions):** Ejecución automática de [`bi_devops_ci.yml`](../.github/workflows/bi_devops_ci.yml) y [`validate_bi_devops.py`](../scripts/validate_bi_devops.py) en cada `push`/`PR` para certificar modelos SQL, 28 tests YAML, JSONs `PBIR`, relaciones `TMDL` y medidas `DAX`.
-* **Ecosistema `Microsoft Fabric` & `Power BI Service`:** Manifiestos oficiales `.platform` con esquema `fabric/gitIntegration/platformProperties/2.0.0` (`logicalId` persistentes) compatibles con sincronización Git en Workspaces de Fabric y reporte publicado en **Power BI Service** (consumiendo **Google BigQuery** como *Cloud Data Warehouse*).
+El proyecto se gestiona aplicando buenas prácticas de control de versiones para analítica y BI:
+* **Formato `PBIP` (`TMDL` + `PBIR`):** En lugar de un archivo binario cerrado `.pbix`, el modelo semántico se almacena en texto legible (`model.tmdl`, `relationships.tmdl`, `tables/*.tmdl`) y las definiciones visuales en archivos JSON estructurados junto al tema corporativo `Retail_Executive_Dark.json`.
+* **Control de Versiones (`Git/GitHub`):** Trazabilidad conjunta de los modelos SQL de `dbt Core` y del proyecto de `Power BI`, excluyendo cachés locales (`cache.abf`, `localSettings.json`) y credenciales de Google Cloud mediante [`.gitignore`](../.gitignore).
+* **Publicación en `Power BI Service`:** Despliegue interactivo en la web de Power BI conectado al modelo dimensional en **Google BigQuery**.
 
