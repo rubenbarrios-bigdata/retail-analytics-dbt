@@ -4,7 +4,8 @@ Este documento detalla la segunda etapa del proyecto **Retail Analytics**: la co
 
 ![Dashboard Ejecutivo Power BI + BigQuery](../assets/dashboard_powerbi_bigquery.png)
 
-> 🌐 **Explora el Dashboard Interactivo en Vivo (Acceso Público):** [Ver Dashboard Ejecutivo en Power BI Web](https://app.powerbi.com/view?r=eyJrIjoiZDdhMGMyMzktNmEyMC00Yzg0LWE1MWItZWVlY2U1YWUwMWNjIiwidCI6IjgxY2NjYzQzLWI1NjEtNDFmNy05NDgwLWU5ZThmMDI3YzQ0MyIsImMiOjR9)
+> 🌐 **Explora el Dashboard Interactivo en Vivo (Acceso Público):** [Ver Dashboard Ejecutivo en Power BI Web](https://app.powerbi.com/view?r=eyJrIjoiZDdhMGMyMzktNmEyMC00Yzg0LWE1MWItZWVlY2U1YWUwMWNjIiwidCI6IjgxY2NjYzQzLWI1NjEtNDFmNy05NDgwLWU5ZThmMDI3YzQ0MyIsImMiOjR9)  
+> 📄 **Informe Completo End-to-End en PDF:** [Descargar `INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf`](INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf)
 
 ---
 
@@ -211,4 +212,14 @@ Venta YTD = TOTALYTD([Venta Neta], Calendario[Fecha])
 1. **Programa de Retención VIP:** Dado que el segmento *VIP* aporta casi tres cuartas partes de la utilidad neta, implementar beneficios exclusivos (envío prioritario o acceso anticipado en *Electrónica* y *Muebles*) protege el núcleo de ingresos de la compañía.
 2. **Desarrollo del Segmento Frecuente a VIP:** Diseñar campañas de *upselling* y *bundles* (combinando *Electrónica* con *Accesorios*) dirigidas a clientes *Frecuentes* para superar el umbral de `$600` de gasto acumulado.
 3. **Auditoría de Devoluciones (`~$13 mil`):** Analizar las causas de devolución por SKU y canal de venta para reducir la tasa actual del `7.4%` al menos en 2 puntos porcentuales, recuperando margen directo sin costo adicional de adquisición de clientes.
+
+---
+
+## 5. Power BI DevOps: `PBIP`, `Git/GitHub`, `CI/CD` y `Microsoft Fabric`
+
+El desarrollo del proyecto se gestiona íntegramente bajo estándares de **BI-as-Code**:
+* **Formato `PBIP` (`TMDL` + `PBIR`):** Modelo semántico legible en texto (`model.tmdl`, `relationships.tmdl`, `tables/*.tmdl`) y visuales JSON (`PBIR`).
+* **Control de Versiones (`Git/GitHub`):** Trazabilidad unificada de `dbt` + `Power BI`, excluyendo archivos binarios locales (`cache.abf`, `localSettings.json`) y credenciales mediante [`.gitignore`](../.gitignore).
+* **Integración Continua (`CI/CD` en GitHub Actions):** Ejecución automática de [`bi_devops_ci.yml`](../.github/workflows/bi_devops_ci.yml) y [`validate_bi_devops.py`](../scripts/validate_bi_devops.py) en cada `push`/`PR` para certificar modelos SQL, 28 tests YAML, JSONs `PBIR`, relaciones `TMDL` y medidas `DAX`.
+* **Ecosistema `Microsoft Fabric` & `Power BI Service`:** Manifiestos oficiales `.platform` con esquema `fabric/gitIntegration/platformProperties/2.0.0` (`logicalId` persistentes) compatibles con sincronización Git en Workspaces de Fabric y reporte publicado en **Power BI Service** (consumiendo **Google BigQuery** como *Cloud Data Warehouse*).
 

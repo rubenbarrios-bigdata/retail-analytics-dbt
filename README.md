@@ -3,14 +3,16 @@
 [![dbt-core](https://img.shields.io/badge/dbt--core-v1.12.5-orange?logo=dbt)](https://www.getdbt.com/)
 [![Google BigQuery](https://img.shields.io/badge/Google_Cloud-BigQuery-blue?logo=googlecloud)](https://cloud.google.com/bigquery)
 [![Power BI](https://img.shields.io/badge/Power_BI-Ver_Dashboard_Interactivo-F2C811?logo=powerbi&logoColor=black)](https://app.powerbi.com/view?r=eyJrIjoiZDdhMGMyMzktNmEyMC00Yzg0LWE1MWItZWVlY2U1YWUwMWNjIiwidCI6IjgxY2NjYzQzLWI1NjEtNDFmNy05NDgwLWU5ZThmMDI3YzQ0MyIsImMiOjR9)
+[![Power BI DevOps](https://github.com/rubenbarrios-bigdata/retail-analytics-dbt/actions/workflows/bi_devops_ci.yml/badge.svg)](https://github.com/rubenbarrios-bigdata/retail-analytics-dbt/actions/workflows/bi_devops_ci.yml)
 [![DAX](https://img.shields.io/badge/Modelado-Star_Schema_%7C_DAX-00B4D8)](docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md)
 [![Tests Passing](https://img.shields.io/badge/Calidad_de_Datos-28%2F28%20tests%20pasados-brightgreen)](https://docs.getdbt.com/docs/build/data-tests)
-[![SQL](https://img.shields.io/badge/Language-SQL-informational)](https://cloud.google.com/bigquery/docs/reference/standard-sql/en-US)
+[![Informe PDF](https://img.shields.io/badge/Documentación-Informe_End--to--End_PDF-EC1C24?logo=adobeacrobatreader&logoColor=white)](docs/INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf)
 [![Rol](https://img.shields.io/badge/Perfil-Analista%20de%20Datos%20%7C%20BI-green)](#contexto-del-proyecto-y-rol-del-analista)
 
 ![Dashboard Ejecutivo Retail & E-Commerce en Power BI](assets/dashboard_powerbi_bigquery.png)
 
-> 🌐 **Explora el Dashboard Interactivo en Vivo (Acceso Público):** [Abrir Dashboard en Power BI Web](https://app.powerbi.com/view?r=eyJrIjoiZDdhMGMyMzktNmEyMC00Yzg0LWE1MWItZWVlY2U1YWUwMWNjIiwidCI6IjgxY2NjYzQzLWI1NjEtNDFmNy05NDgwLWU5ZThmMDI3YzQ0MyIsImMiOjR9)
+> 🌐 **Explora el Dashboard Interactivo en Vivo (Acceso Público):** [Abrir Dashboard en Power BI Web](https://app.powerbi.com/view?r=eyJrIjoiZDdhMGMyMzktNmEyMC00Yzg0LWE1MWItZWVlY2U1YWUwMWNjIiwidCI6IjgxY2NjYzQzLWI1NjEtNDFmNy05NDgwLWU5ZThmMDI3YzQ0MyIsImMiOjR9)  
+> 📄 **Informe Completo del Proyecto End-to-End (PDF):** [Descargar / Ver `INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf`](docs/INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf)
 
 ---
 
@@ -97,7 +99,19 @@ Las tablas limpias de BigQuery (`fct_orders`, `stg_order_items`, `dim_customers`
 * **Control Operativo:** Frente a los pedidos efectivos (*Completado* `~$115 mil`, *En Proceso* `~$10 mil` y *Enviado* `~$8 mil`), se cuantifican **`~$13 mil` en Devoluciones (`7.4%`)** y **`~$5 mil` en Cancelaciones (`3.7%`)**, identificando el principal foco de mejora post-venta.
 * **Desempeño por País:** **México** lidera en cantidad de pedidos efectivos (`163`) y clientes activos (`40`), mientras que **Argentina** lidera en facturación neta (`$24,808.31`) y utilidad (`$12,408.81`), seguidos por **Colombia** y **Chile**.
 
-👉 **[Ver el Análisis Ejecutivo Completo, Diagrama Estrella y Catálogo de Fórmulas DAX aquí (`docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md`)](docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md)**
+👉 **[Ver el Análisis Ejecutivo Completo, Diagrama Estrella y Catálogo de Fórmulas DAX aquí (`docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md`)](docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md)**  
+📄 **[Descargar el Informe Completo End-to-End en PDF (`docs/INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf`)](docs/INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf)**
+
+---
+
+## ⚙️ Power BI DevOps: PBIP, Git/GitHub, CI/CD y Microsoft Fabric
+
+En lugar de almacenar el proyecto en un archivo binario cerrado (`.pbix`), se implementó una arquitectura moderna de **BI-as-Code / Power BI DevOps** que permite auditar cambios línea por línea y automatizar validaciones:
+
+* **1. Formato `PBIP` (`TMDL` + `PBIR`):** Desacople completo del **Modelo Semántico** en código declarativo `TMDL` (`model.tmdl`, `relationships.tmdl`, `tables/*.tmdl`) y de la **capa visual del reporte** en JSON estructurado (`PBIR` + tema oscuro corporativo `Retail_Executive_Dark.json`).
+* **2. Control de Versiones en `Git / GitHub`:** Versionado conjunto de los modelos SQL de **dbt Core** y del proyecto **Power BI**, protegido mediante reglas en [`.gitignore`](.gitignore) que excluyen cachés locales (`cache.abf`, `localSettings.json`) y credenciales en la nube.
+* **3. Integración Continua (`CI/CD` con GitHub Actions):** El workflow automático [`.github/workflows/bi_devops_ci.yml`](.github/workflows/bi_devops_ci.yml) ejecuta [`scripts/validate_bi_devops.py`](scripts/validate_bi_devops.py) en cada `push` y `pull_request`, verificando la estructura de `dbt`, las 28 pruebas YAML, la sintaxis JSON de `PBIR`, las relaciones `TMDL` y el catálogo `DAX`.
+* **4. Ecosistema `Microsoft Fabric` (`Fabric Git Integration` & `Power BI Service`):** Mientras **Google BigQuery** actúa como *Cloud Data Warehouse*, tanto el modelo semántico como el reporte incluyen los manifiestos oficiales [`.platform`](powerbi/Dashboard%20dbt-BigQuery%20Retail%20Analytics.SemanticModel/.platform) bajo el esquema `fabric/gitIntegration/platformProperties/2.0.0` (`logicalId` persistentes), habilitando sincronización nativa con *Workspaces* de **Microsoft Fabric** y publicación interactiva en **Power BI Service**.
 
 ---
 
@@ -107,8 +121,9 @@ Las tablas limpias de BigQuery (`fct_orders`, `stg_order_items`, `dim_customers`
 * [`models/marts/`](models/marts/): Tablas analíticas dimensionales y de hechos (`fct_orders`, `dim_customers`, `dim_products`) junto a sus pruebas de calidad en [`schema.yml`](models/marts/schema.yml).
 * [`analyses/`](analyses/): Consultas SQL de perfilado estadístico y exploración analítica (`profile_dim_customers.sql`).
 * [`seeds/`](seeds/) y [`data/`](data/): Dataset simulado reproducible (*Retail & E-commerce Mock Data*, libre de PII con dominios `@example.com`).
-* [`powerbi/`](powerbi/): Proyecto completo de Power BI en formato versionable (`.pbip`), incluyendo el **Modelo Semántico en `TMDL`** (tablas, relaciones y medidas DAX) y la definición visual del reporte con tema personalizado oscuro (`Retail_Executive_Dark.json`).
-* [`docs/`](docs/): Documentación ejecutiva del análisis comercial, arquitectura en estrella y diccionario DAX.
+* [`powerbi/`](powerbi/): Proyecto completo de Power BI en formato versionable (`.pbip`), incluyendo el **Modelo Semántico en `TMDL`**, manifiestos `.platform` de **Microsoft Fabric Git Integration** y la definición visual `PBIR` (`Retail_Executive_Dark.json`).
+* [`.github/workflows/`](.github/workflows/) y [`scripts/`](scripts/): Pipeline automatizado de **CI/CD en GitHub Actions** (`bi_devops_ci.yml` + `validate_bi_devops.py`).
+* [`docs/`](docs/): Documentación ejecutiva ([`ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md`](docs/ANALISIS_EJECUTIVO_Y_MEDIDAS_DAX.md)) e **Informe Completo End-to-End en PDF** ([`INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf`](docs/INFORME_EJECUTIVO_END_TO_END_RETAIL_ANALYTICS.pdf)).
 * [`assets/`](assets/): Capturas del Dashboard Ejecutivo, de la vista del Modelo en Estrella en Power BI y de la vista previa de tablas en Google BigQuery.
 
 ---
@@ -165,4 +180,4 @@ Se ejecutan **28 pruebas automáticas** en BigQuery para blindar la integridad d
 ## 👨‍💻 Autor
 
 **Rubén Barrios**  
-*Analista de Datos | Business Intelligence (SQL · dbt · Google BigQuery · Power BI · DAX)*
+*Analista de Datos | Business Intelligence (SQL · dbt · Google BigQuery · Power BI · DAX · Power BI DevOps: PBIP, Git/GitHub, CI/CD & Fabric Git Integration)*
