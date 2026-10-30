@@ -1,4 +1,4 @@
-# Análisis Ejecutivo de Negocio, Modelo en Estrella y Catálogo DAX (Power BI + BigQuery)
+# Análisis Ejecutivo de Negocio, Modelo en Estrella y Catálogo DAX en Power BI (PBIP + BigQuery)
 
 Este documento detalla la segunda etapa del proyecto **Retail Analytics**: la conexión de **Power BI** al almacén de datos en **Google BigQuery** (`dbt-retail-analytics.dbt_dev`), el diseño del **Modelo Semántico en Estrella**, el desarrollo de medidas **DAX** y los hallazgos estratégicos obtenidos del Dashboard Ejecutivo.
 

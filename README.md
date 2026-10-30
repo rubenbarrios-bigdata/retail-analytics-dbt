@@ -1,4 +1,4 @@
-# Retail Analytics End-to-End: Modelado con dbt + Google BigQuery y Dashboard Ejecutivo en Power BI (DAX)
+# Retail Analytics End-to-End: Modelado con dbt + Google BigQuery y Dashboard Ejecutivo en Power BI (DAX · PBIP)
 
 [![dbt-core](https://img.shields.io/badge/dbt--core-v1.12.5-orange?logo=dbt)](https://www.getdbt.com/)
 [![Google BigQuery](https://img.shields.io/badge/Google_Cloud-BigQuery-blue?logo=googlecloud)](https://cloud.google.com/bigquery)
